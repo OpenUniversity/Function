@@ -7,10 +7,7 @@ import function.ValueNotInDomainException;
  * Represents a function composed in another function, such as (3x+8)^6,
  * ln(sinx), and so on
  */
-public class Compose extends Function {
-
-    private Function outer;
-    private Function inner;
+public class Compose extends FunctionArithmetic {
 
     /**
      * Generate a new composed function in the form of outer(inner(x))
@@ -19,23 +16,22 @@ public class Compose extends Function {
      * @param inner the inner function
      */
     public Compose(Function outer, Function inner) {
-        this.outer = outer;
-        this.inner = inner;
+        super(outer, inner);
     }
 
     @Override
-    public double evaluate(double x) throws ValueNotInDomainException {
-        return outer.evaluate(inner.evaluate(x));
+    public double unresolvedEvaluate(double x) throws ValueNotInDomainException {
+        return left.evaluate(right.evaluate(x));
     }
 
     @Override
-    public Function derive() {
-        return new Product(new Compose(outer.derive(), inner), inner.derive()); // f'(g) * g'
+    public Function unresolvedDerive() {
+        return new Product(new Compose(left.derive(), right), right.derive()); // f'(g) * g'
     }
 
     @Override
-    public String substitute(String x) {
-        return outer.substitute(inner.substitute(x));
+    public String unresolvedSubstitute(String x) {
+        return left.substitute(right.substitute(x));
     }
 
 }

@@ -20,22 +20,22 @@ public class Sum extends FunctionArithmetic {
 
     @Override
     protected Function tryResolve() throws ArithmeticException {
-        return this.left.plus(this.right);
+        return left.plus(right);
     }
 
     @Override
     public double unresolvedEvaluate(double x) throws ValueNotInDomainException {
-        return this.left.evaluate(x) + this.right.evaluate(x);
+        return left.evaluate(x) + right.evaluate(x);
     }
 
     @Override
     public Function unresolvedDerive() {
-        return new Sum(this.left.derive(), this.right.derive());
+        return new Sum(left.derive(), right.derive());
     }
 
     @Override
     public String unresolvedSubstitute(String x) {
-        return "(" + this.left.substitute(x) + " + " + this.right.substitute(x) + ")";
+        return "(" + left.substitute(x) + " + " + right.substitute(x) + ")";
     }
 
 }

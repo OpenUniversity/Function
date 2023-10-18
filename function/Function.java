@@ -50,6 +50,15 @@ public abstract class Function {
     public abstract String substitute(String x);
 
     /**
+     * Calculates the negative of this function
+     * 
+     * @return the negated function
+     */
+    public Function negate() {
+        return new Scale(-1, this);
+    }
+
+    /**
      * Creates the sum of this function with another one
      * 
      * @param other the function to try to add
@@ -63,6 +72,17 @@ public abstract class Function {
         if (other.getScalar() == 0)
             return this;
         throw new ArithmeticException();
+    }
+
+    /**
+     * Subtracts the other function from this one
+     * 
+     * @param other the function to subtract
+     * @return the difference function
+     * @throws ArithmeticException if functions cannot be subtarcted
+     */
+    public Function minus(Function other) throws ArithmeticException {
+        return this.plus(other.negate());
     }
 
     @Override

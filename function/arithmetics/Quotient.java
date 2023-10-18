@@ -7,10 +7,7 @@ import function.elementary.PowerFunction;
 /**
  * Represents a ratio of two functions
  */
-public class Quotient extends Function {
-
-    private Function numerator;
-    private Function denominator;
+public class Quotient extends FunctionArithmetic {
 
     /**
      * Creates a new Quotient function
@@ -19,29 +16,28 @@ public class Quotient extends Function {
      * @param denominator the denominator
      */
     public Quotient(Function numerator, Function denominator) {
-        this.numerator = numerator;
-        this.denominator = denominator;
+        super(numerator, denominator);
     }
 
     @Override
-    public double evaluate(double x) throws ValueNotInDomainException {
-        double denominatorValue = denominator.evaluate(x);
+    public double unresolvedEvaluate(double x) throws ValueNotInDomainException {
+        double denominatorValue = right.evaluate(x);
         if (denominatorValue == 0)
             throw new ValueNotInDomainException(this, x);
-        return numerator.evaluate(x) / denominatorValue;
+        return left.evaluate(x) / denominatorValue;
     }
 
     @Override
-    public Function derive() {
+    public Function unresolvedDerive() {
         // we can derive f/g by deriving the product of f and 1/g
-        Function inverseDenominator = new Compose(new PowerFunction(-1), denominator);
-        Function quotient = new Product(numerator, inverseDenominator);
+        Function inverseDenominator = new Compose(new PowerFunction(-1), right);
+        Function quotient = new Product(left, inverseDenominator);
         return quotient.derive();
     }
 
     @Override
-    public String substitute(String x) {
-        return numerator.substitute(x) + " / " + denominator.substitute(x);
+    public String unresolvedSubstitute(String x) {
+        return left.substitute(x) + " / " + right.substitute(x);
     }
 
 }

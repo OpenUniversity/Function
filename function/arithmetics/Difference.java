@@ -6,33 +6,35 @@ import function.ValueNotInDomainException;
 /**
  * Represents a difference of two functions
  */
-public class Difference extends Function {
-    private Function func1;
-    private Function func2;
+public class Difference extends FunctionArithmetic {
 
     /**
-     * Generates a new sum function
+     * Generates a new difference function
      * 
-     * @param func1 one of the functions in the sum
-     * @param func2 the second function in the sum
+     * @param left  one of the functions in the difference
+     * @param right the second function in the difference
      */
-    public Difference(Function func1, Function func2) {
-        this.func1 = func1;
-        this.func2 = func2;
+    public Difference(Function left, Function right) {
+        super(left, right);
     }
 
     @Override
-    public double evaluate(double x) throws ValueNotInDomainException {
-        return func1.evaluate(x) - func2.evaluate(x);
+    protected Function tryResolve() throws ArithmeticException {
+        return left.minus(right);
     }
 
     @Override
-    public Function derive() {
-        return new Difference(func1.derive(), func2.derive());
+    public double unresolvedEvaluate(double x) throws ValueNotInDomainException {
+        return left.evaluate(x) - right.evaluate(x);
     }
 
     @Override
-    public String substitute(String x) {
-        return "(" + func1.substitute(x) + " - " + func2.substitute(x) + ")";
+    public Function unresolvedDerive() {
+        return new Difference(left.derive(), right.derive());
+    }
+
+    @Override
+    public String unresolvedSubstitute(String x) {
+        return "(" + left.substitute(x) + " - " + right.substitute(x) + ")";
     }
 }
