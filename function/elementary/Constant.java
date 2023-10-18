@@ -14,13 +14,6 @@ public class Constant extends Function {
         return new Scale(scalar, new Constant());
     }
 
-    public static boolean isConstant(Function f) {
-        if (!(f instanceof Scale))
-            return false;
-        Scale scale = (Scale) f;
-        return scale.getScaledFunction() instanceof Constant;
-    }
-
     // to prevent usage outside of this class
     private Constant() {
     }
