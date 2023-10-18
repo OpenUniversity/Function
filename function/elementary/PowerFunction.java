@@ -30,7 +30,7 @@ public class PowerFunction extends Function {
     @Override
     public Function derive() {
         if (power == 1)
-            return new Scale(1, new Constant()); // [x^1]' = 1
+            return Constant.of(1); // [x^1]' = 1
         return new Scale(power, new PowerFunction(power - 1));
     }
 

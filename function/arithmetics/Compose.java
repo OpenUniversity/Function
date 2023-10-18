@@ -35,8 +35,7 @@ public class Compose extends Function {
 
     @Override
     public String substitute(String x) {
-        String innerX = "(" + inner.substitute(x) + ")";
-        return outer.substitute(innerX);
+        return outer.substitute(inner.substitute(x));
     }
 
 }

@@ -33,6 +33,6 @@ public class Difference extends Function {
 
     @Override
     public String substitute(String x) {
-        return func1.substitute(x) + " - " + func2.substitute(x);
+        return "(" + func1.substitute(x) + " - " + func2.substitute(x) + ")";
     }
 }

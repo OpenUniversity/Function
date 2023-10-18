@@ -44,14 +44,19 @@ public class Scale extends Function {
     @Override
     public String substitute(String x) {
         if (scalar == 1)
-            return func.substitute(x);
+            return func.substitute(x).isEmpty() ? "1" : func.substitute(x);
         if (scalar == 0)
             return "0";
-        return scalar + func.substitute(x);
+        String scalarStr = scalar < 0 ? "(" + scalar + ")" : scalar + "";
+        return scalarStr + func.substitute(x);
     }
 
     public double getScalar() {
         return scalar;
+    }
+
+    public Function getScaledFunction() {
+        return func;
     }
 
 }
