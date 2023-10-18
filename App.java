@@ -25,7 +25,7 @@ public class App {
         System.out.println(h);
         System.out.println(h.derive());
 
-        Function p = (new PowerFunction(2)).plus(f);
+        Function p = (new Sum(new PowerFunction(2), new PowerFunction(2))).plus(f);
         System.out.println(p);
     }
 }

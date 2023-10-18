@@ -6,43 +6,36 @@ import function.ValueNotInDomainException;
 /**
  * Represents a sum of two functions
  */
-public class Sum extends Function {
-
-    private Function func1;
-    private Function func2;
+public class Sum extends FunctionArithmetic {
 
     /**
      * Generates a new sum function
      * 
-     * @param func1 one of the functions in the sum
-     * @param func2 the second function in the sum
+     * @param left  one of the functions in the sum
+     * @param right the second function in the sum
      */
-    public Sum(Function func1, Function func2) {
-        this.func1 = func1;
-        this.func2 = func2;
+    public Sum(Function left, Function right) {
+        super(left, right);
     }
 
     @Override
-    public double evaluate(double x) throws ValueNotInDomainException {
-        return func1.evaluate(x) + func2.evaluate(x);
+    protected Function tryResolve() throws ArithmeticException {
+        return this.left.plus(this.right);
     }
 
     @Override
-    public Function derive() {
-        try {
-            return func1.plus(func2).derive();
-        } catch (ArithmeticException e) {
-            return new Sum(func1.derive(), func2.derive());
-        }
+    public double unresolvedEvaluate(double x) throws ValueNotInDomainException {
+        return this.left.evaluate(x) + this.right.evaluate(x);
     }
 
     @Override
-    public String substitute(String x) {
-        try {
-            return func1.plus(func2).substitute(x);
-        } catch (ArithmeticException e) {
-            return "(" + func1.substitute(x) + " + " + func2.substitute(x) + ")";
-        }
+    public Function unresolvedDerive() {
+        return new Sum(this.left.derive(), this.right.derive());
+    }
+
+    @Override
+    public String unresolvedSubstitute(String x) {
+        return "(" + this.left.substitute(x) + " + " + this.right.substitute(x) + ")";
     }
 
 }
