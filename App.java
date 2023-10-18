@@ -9,8 +9,12 @@ public class App {
         Function f = new PowerFunction(2);
         System.out.println(f);
         System.out.println(f.derive());
-        System.out.println(f.derive().derive());
-        System.out.println(f.derive().derive().derive());
+
+        Function f1 = new Sum(f, Constant.of(5));
+        System.out.println(f1);
+        System.out.println(f1.derive());
+        System.out.println(f1.derive().derive());
+        System.out.println(f1.derive().derive().derive());
 
         Function g = new Sum(new PowerFunction(1), Constant.of(3));
         System.out.println(g);
@@ -20,5 +24,8 @@ public class App {
         Function h = new Quotient(f, g);
         System.out.println(h);
         System.out.println(h.derive());
+
+        Function p = (new PowerFunction(2)).plus(f);
+        System.out.println(p);
     }
 }

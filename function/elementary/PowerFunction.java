@@ -47,4 +47,11 @@ public class PowerFunction extends Function {
         return x + "^" + power;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof PowerFunction))
+            return false;
+        return this.power == ((PowerFunction) obj).power;
+    }
+
 }

@@ -51,10 +51,12 @@ public class Scale extends Function {
         return scalarStr + func.substitute(x);
     }
 
+    @Override
     public double getScalar() {
         return scalar;
     }
 
+    @Override
     public Function getScaledFunction() {
         return func;
     }

@@ -40,4 +40,11 @@ public class Constant extends Function {
         return "";
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof Constant))
+            return false;
+        return true;
+    }
+
 }

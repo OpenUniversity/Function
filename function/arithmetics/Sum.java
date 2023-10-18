@@ -29,12 +29,20 @@ public class Sum extends Function {
 
     @Override
     public Function derive() {
-        return new Sum(func1.derive(), func2.derive());
+        try {
+            return func1.plus(func2).derive();
+        } catch (ArithmeticException e) {
+            return new Sum(func1.derive(), func2.derive());
+        }
     }
 
     @Override
     public String substitute(String x) {
-        return "(" + func1.substitute(x) + " + " + func2.substitute(x) + ")";
+        try {
+            return func1.plus(func2).substitute(x);
+        } catch (ArithmeticException e) {
+            return "(" + func1.substitute(x) + " + " + func2.substitute(x) + ")";
+        }
     }
 
 }
