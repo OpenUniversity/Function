@@ -7,7 +7,7 @@ package function;
 public class Constant extends Function {
 
     public static Function of(double scalar) {
-        return LinearCombination.Scale(new Constant(), scalar);
+        return FunctionVector.Scale(new Constant(), scalar);
     }
 
     // to prevent usage outside of this class
@@ -21,7 +21,7 @@ public class Constant extends Function {
 
     @Override
     public Function derive() {
-        return new LinearCombination();
+        return new FunctionVector();
     }
 
     @Override

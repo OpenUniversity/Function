@@ -10,30 +10,27 @@ import utilities.vector.Vector;
  * 
  * @version 2
  */
-public class LinearCombination extends Function {
+public class FunctionVector extends Function {
 
     private Vector<Function> terms;
 
     /**
      * Constructs the 0 function
      */
-    public LinearCombination() {
+    public FunctionVector() {
         terms = new ArrayListVector<>();
     }
 
     /**
      * Copy constructor for private use
-     * 
-     * @param coefficients
-     * @param functions
      */
-    private LinearCombination(LinearCombination other) {
+    private FunctionVector(FunctionVector other) {
         this();
         terms.append(other.terms, 1);
     }
 
-    public static LinearCombination Scale(Function func, double scalar) {
-        return (LinearCombination) new LinearCombination().plus(func, scalar);
+    public static FunctionVector Scale(Function func, double scalar) {
+        return (FunctionVector) new FunctionVector().plus(func, scalar);
     }
 
     /**
@@ -56,9 +53,9 @@ public class LinearCombination extends Function {
 
     @Override
     public Function derive() {
-        LinearCombination derivative = new LinearCombination();
+        FunctionVector derivative = new FunctionVector();
         for (Scale<Function> term : terms) {
-            derivative = (LinearCombination) derivative.plus(term.getVector().derive(), term.getScalar());
+            derivative = (FunctionVector) derivative.plus(term.getVector().derive(), term.getScalar());
         }
         return derivative;
     }
@@ -118,9 +115,9 @@ public class LinearCombination extends Function {
      * @return the new sum
      */
     public Function plus(Function other, double coefficient) {
-        LinearCombination sum = new LinearCombination(this);
-        if (other instanceof LinearCombination) { // if other is also a linear combination, add its terms separately
-            LinearCombination combination = (LinearCombination) other;
+        FunctionVector sum = new FunctionVector(this);
+        if (other instanceof FunctionVector) { // if other is also a linear combination, add its terms separately
+            FunctionVector combination = (FunctionVector) other;
             sum.terms.append(combination.terms, coefficient);
         } else
             sum.terms.add(other, coefficient);
@@ -129,13 +126,13 @@ public class LinearCombination extends Function {
 
     @Override
     public Function times(Function other) {
-        LinearCombination product = new LinearCombination();
+        FunctionVector product = new FunctionVector();
         // if other factor is also a linear combination, we want to cross-add this.
-        if (other instanceof LinearCombination) {
+        if (other instanceof FunctionVector) {
             // in such case, for instance (x+3)(x+4), this equates to (x+3)*x + (x+3)*4
-            LinearCombination combination = (LinearCombination) other;
+            FunctionVector combination = (FunctionVector) other;
             for (Scale<Function> term : combination.terms) {
-                product.terms.append(((LinearCombination) this.times(term.getVector())).terms, term.getScalar());
+                product.terms.append(((FunctionVector) this.times(term.getVector())).terms, term.getScalar());
             }
         } else {
             // this is the case of (x+3)*x, multiply each of this combination element's by
@@ -164,7 +161,7 @@ public class LinearCombination extends Function {
     public boolean equals(Object other) {
         if (!(other instanceof Function))
             return false;
-        LinearCombination compareTo = Scale((Function) other, 1);
+        FunctionVector compareTo = Scale((Function) other, 1);
         return this.terms.equals(compareTo.terms);
     }
 

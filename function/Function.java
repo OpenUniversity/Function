@@ -42,7 +42,7 @@ public abstract class Function {
      * @return the sum function
      */
     public Function plus(Function other) {
-        return new LinearCombination()
+        return new FunctionVector()
                 .plus(this)
                 .plus(other);
     }
@@ -54,7 +54,7 @@ public abstract class Function {
      * @return the difference function
      */
     public Function minus(Function other) {
-        return new LinearCombination()
+        return new FunctionVector()
                 .plus(this)
                 .minus(other);
     }
@@ -68,7 +68,7 @@ public abstract class Function {
     public Function times(Function other) {
         if (other instanceof Constant)
             return this;
-        if (other instanceof LinearCombination)
+        if (other instanceof FunctionVector)
             return other.times(this);
         return new Product(this, other);
     };

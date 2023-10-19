@@ -2,7 +2,7 @@ package function.elementary;
 
 import function.Constant;
 import function.Function;
-import function.LinearCombination;
+import function.FunctionVector;
 
 /**
  * Represents a function in the form of x^power, where power is a real number
@@ -40,7 +40,7 @@ public class PowerFunction extends Function {
     public Function derive() {
         if (power == 1)
             return Constant.of(1); // [x^1]' = 1
-        return LinearCombination.Scale(new PowerFunction(power - 1), power); // [x^n]'=nx^(n-1)
+        return FunctionVector.Scale(new PowerFunction(power - 1), power); // [x^n]'=nx^(n-1)
     }
 
     @Override
