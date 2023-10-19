@@ -1,7 +1,4 @@
-package function.elementary;
-
-import function.Function;
-import function.LinearCombination;
+package function;
 
 /**
  * Represents a function f(x)=1

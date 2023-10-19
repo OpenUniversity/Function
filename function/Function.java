@@ -62,6 +62,8 @@ public abstract class Function {
      * @return the product function
      */
     public Function times(Function other) {
+        if (other instanceof Constant)
+            return this;
         if (other instanceof LinearCombination)
             return other.times(this);
         throw new RuntimeException("Method unsupported");

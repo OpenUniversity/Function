@@ -1,5 +1,5 @@
+import function.Constant;
 import function.Function;
-import function.elementary.Constant;
 import function.elementary.PowerFunction;
 
 public class App {

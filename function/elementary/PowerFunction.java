@@ -1,5 +1,6 @@
 package function.elementary;
 
+import function.Constant;
 import function.Function;
 import function.LinearCombination;
 
@@ -55,8 +56,6 @@ public class PowerFunction extends Function {
 
     @Override
     public Function times(Function other) {
-        if (other instanceof Constant)
-            return this;
 
         if (other instanceof PowerFunction) {
             double otherPower = ((PowerFunction) other).power;
