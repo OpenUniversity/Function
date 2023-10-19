@@ -25,4 +25,9 @@ public class Scale<VecType> {
         return vector;
     }
 
+    @Override
+    public String toString() {
+        return scalar + "" + vector;
+    }
+
 }

@@ -30,7 +30,7 @@ public class FunctionVector extends Function {
     }
 
     public static FunctionVector Scale(Function func, double scalar) {
-        return (FunctionVector) new FunctionVector().plus(func, scalar);
+        return new FunctionVector().plus(func, scalar);
     }
 
     /**
@@ -114,7 +114,7 @@ public class FunctionVector extends Function {
      * @param coefficient its desired coefficient
      * @return the new sum
      */
-    public Function plus(Function other, double coefficient) {
+    public FunctionVector plus(Function other, double coefficient) {
         FunctionVector sum = new FunctionVector(this);
         if (other instanceof FunctionVector) { // if other is also a linear combination, add its terms separately
             FunctionVector combination = (FunctionVector) other;
@@ -153,8 +153,12 @@ public class FunctionVector extends Function {
 
     @Override
     public Function compose(Function inner) {
-        // TODO: Implement composition
-        return super.compose(inner);
+        // composition of vector != vector of compositions!!!
+        FunctionVector composition = new FunctionVector();
+        for (Scale<Function> term : terms) {
+            composition = composition.plus(term.getVector().compose(inner), term.getScalar());
+        }
+        return composition;
     }
 
     @Override
