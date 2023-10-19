@@ -1,5 +1,8 @@
 package function;
 
+import function.arithmetics.Compose;
+import function.arithmetics.Product;
+
 /**
  * Represents a function in java
  */
@@ -66,7 +69,7 @@ public abstract class Function {
             return this;
         if (other instanceof LinearCombination)
             return other.times(this);
-        throw new RuntimeException("Method unsupported");
+        return new Product(this, other);
     };
 
     /**
@@ -89,10 +92,10 @@ public abstract class Function {
      * @param inner the inner function
      * @return the composed function
      */
-    public Function of(Function inner) {
+    public Function compose(Function inner) {
         if (inner instanceof Constant)
             return Constant.of(evaluate(inner.evaluate(0))); // will just give us the value at 1
-        throw new RuntimeException("Method unsupported");
+        return new Compose(this, inner);
     };
 
     /**
@@ -101,7 +104,7 @@ public abstract class Function {
      * @param other the function to compare to
      * @return true if equal, false otherwise
      */
-    public abstract boolean equals(Function other);
+    public abstract boolean equals(Object obj);
 
     @Override
     public String toString() {

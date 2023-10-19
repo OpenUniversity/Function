@@ -30,7 +30,7 @@ public class Constant extends Function {
     }
 
     @Override
-    public boolean equals(Function other) {
+    public boolean equals(Object other) {
         return other instanceof Constant;
     }
 
@@ -40,7 +40,7 @@ public class Constant extends Function {
     }
 
     @Override
-    public Function of(Function inner) {
+    public Function compose(Function inner) {
         return this;
     }
 

@@ -55,7 +55,7 @@ public class PowerFunction extends Function {
     }
 
     @Override
-    public boolean equals(Function other) {
+    public boolean equals(Object other) {
         if (!(other instanceof PowerFunction))
             return false;
         return this.power == ((PowerFunction) other).power;
@@ -84,14 +84,17 @@ public class PowerFunction extends Function {
     }
 
     @Override
-    public Function of(Function inner) {
+    public Function compose(Function inner) {
 
         if (inner instanceof PowerFunction) {
             double innerPower = ((PowerFunction) inner).power;
             return PowerFunction.of(power * innerPower);
         }
 
-        return super.of(inner);
+        if (power == 1)
+            return inner;
+
+        return super.compose(inner);
     }
 
 }

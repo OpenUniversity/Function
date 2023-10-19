@@ -186,9 +186,17 @@ public class LinearCombination extends Function {
     }
 
     @Override
-    public boolean equals(Function other) {
+    public Function compose(Function inner) {
+        // TODO: Implement composition
+        return super.compose(inner);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Function))
+            return false;
         try {
-            LinearCombination compareTo = Scale(other, 1);
+            LinearCombination compareTo = Scale((Function) other, 1);
             for (int i = 0; i < getSize(); i++) {
                 if (!functions.get(i).equals(compareTo.functions.get(i))
                         || coefficients.get(i) != compareTo.coefficients.get(i))
