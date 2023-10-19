@@ -22,6 +22,7 @@ public class Scale extends Function {
     }
 
     private void init(double scalar, Function func) {
+        System.out.println("Scale ; " + scalar + ";" + func);
         if (func instanceof Scale) {
             Scale scale = (Scale) func;
             init(scalar * scale.scalar, scale.func);

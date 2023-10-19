@@ -20,6 +20,9 @@ public class Sum extends FunctionArithmetic {
 
     @Override
     protected Function tryResolve() throws ArithmeticException {
+        System.out.println(right.getScalar() + ";" + right.getScaledFunction().getClass() + ";" + right.toString());
+        if (right.getScalar() < 0)
+            return new Difference(left, right.negate());
         return left.plus(right);
     }
 

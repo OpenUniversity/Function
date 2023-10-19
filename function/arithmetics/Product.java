@@ -19,6 +19,14 @@ public class Product extends FunctionArithmetic {
     }
 
     @Override
+    protected Function tryResolve() throws ArithmeticException {
+        if (left.getScalar() != 1 || right.getScalar() != 1)
+            return new Scale(left.getScalar() * right.getScalar(),
+                    new Product(left.getScaledFunction(), right.getScaledFunction()));
+        return left.times(right);
+    }
+
+    @Override
     public double unresolvedEvaluate(double x) throws ValueNotInDomainException {
         return left.evaluate(x) * right.evaluate(x);
     }

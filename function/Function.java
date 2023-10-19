@@ -1,6 +1,7 @@
 package function;
 
 import function.arithmetics.Scale;
+import function.elementary.Constant;
 
 /**
  * Represents a function in java
@@ -67,10 +68,10 @@ public abstract class Function {
      *                             simpler response
      */
     public Function plus(Function other) throws ArithmeticException {
-        if (this.getScaledFunction().equals(other.getScaledFunction()))
-            return new Scale(this.getScalar() + other.getScalar(), this.getScaledFunction());
         if (other.getScalar() == 0)
             return this;
+        if (this.getScaledFunction().equals(other.getScaledFunction()))
+            return new Scale(this.getScalar() + other.getScalar(), this.getScaledFunction());
         throw new ArithmeticException();
     }
 
@@ -83,6 +84,23 @@ public abstract class Function {
      */
     public Function minus(Function other) throws ArithmeticException {
         return this.plus(other.negate());
+    }
+
+    /**
+     * Multiplies this function by another one
+     * 
+     * @param other the function to multiply by
+     * @return the product function
+     * @throws ArithmeticException if functions cannot be subtarcted
+     */
+    public Function times(Function other) throws ArithmeticException {
+        if (other.getScalar() == 0 || this.getScalar() == 0)
+            return Constant.of(0);
+        if (other.getScaledFunction() instanceof Constant)
+            return new Scale(other.getScalar(), this);
+        if (this.getScaledFunction() instanceof Constant)
+            return new Scale(this.getScalar(), other);
+        throw new ArithmeticException();
     }
 
     @Override

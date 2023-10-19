@@ -20,6 +20,15 @@ public class Compose extends FunctionArithmetic {
     }
 
     @Override
+    protected Function tryResolve() throws ArithmeticException {
+        if (left.getScalar() != 1) {
+            return new Scale(left.getScalar(),
+                    new Compose(left.getScaledFunction(), right));
+        }
+        throw new ArithmeticException();
+    }
+
+    @Override
     public double unresolvedEvaluate(double x) throws ValueNotInDomainException {
         return left.evaluate(right.evaluate(x));
     }

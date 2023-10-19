@@ -20,6 +20,10 @@ public class Difference extends FunctionArithmetic {
 
     @Override
     protected Function tryResolve() throws ArithmeticException {
+        System.out.println(
+                "Diff;" + right.getScalar() + ";" + right.getScaledFunction().getClass() + ";" + right.toString());
+        if (right.getScalar() < 0)
+            return new Sum(left, right.negate());
         return left.minus(right);
     }
 
