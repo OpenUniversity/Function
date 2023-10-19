@@ -30,5 +30,9 @@ public class App {
         Function fofg = new Compose(f, g);
         System.out.println(fofg);
         System.out.println(fofg.derive());
+
+        Function foverg = f.div(g);
+        System.out.println(foverg);
+        System.out.println(foverg.derive());
     }
 }

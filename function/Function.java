@@ -2,6 +2,7 @@ package function;
 
 import function.arithmetics.Compose;
 import function.arithmetics.Product;
+import function.arithmetics.Quotient;
 
 /**
  * Represents a function in java
@@ -81,7 +82,7 @@ public abstract class Function {
     public Function div(Function other) {
         if (other instanceof Constant)
             return this;
-        throw new RuntimeException("Method unsupported");
+        return new Quotient(this, other);
     };
 
     /**
