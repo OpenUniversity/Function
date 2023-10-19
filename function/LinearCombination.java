@@ -179,6 +179,13 @@ public class LinearCombination extends Function {
     }
 
     @Override
+    public Function div(Function other) {
+        // TODO: Implement function division
+
+        return super.div(other);
+    }
+
+    @Override
     public boolean equals(Function other) {
         try {
             LinearCombination compareTo = Scale(other, 1);

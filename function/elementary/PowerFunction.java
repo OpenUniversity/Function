@@ -22,6 +22,13 @@ public class PowerFunction extends Function {
         this.power = power;
     }
 
+    public static Function of(double power) {
+        if (power == 0)
+            return Constant.of(1);
+        else
+            return new PowerFunction(power);
+    }
+
     @Override
     public double evaluate(double x) {
         if (power < 0 && x == 0)
@@ -59,10 +66,32 @@ public class PowerFunction extends Function {
 
         if (other instanceof PowerFunction) {
             double otherPower = ((PowerFunction) other).power;
-            return new PowerFunction(power + otherPower);
+            return PowerFunction.of(power + otherPower);
         }
 
         return super.times(other);
+    }
+
+    @Override
+    public Function div(Function other) {
+
+        if (other instanceof PowerFunction) {
+            double otherPower = ((PowerFunction) other).power;
+            return PowerFunction.of(power - otherPower);
+        }
+
+        return super.div(other);
+    }
+
+    @Override
+    public Function of(Function inner) {
+
+        if (inner instanceof PowerFunction) {
+            double innerPower = ((PowerFunction) inner).power;
+            return PowerFunction.of(power * innerPower);
+        }
+
+        return super.of(inner);
     }
 
 }

@@ -70,6 +70,32 @@ public abstract class Function {
     };
 
     /**
+     * Divided this function by another one
+     * 
+     * @param other the function to divide by
+     * @return the quotient function
+     */
+    public Function div(Function other) {
+        if (other instanceof Constant)
+            return this;
+        throw new RuntimeException("Method unsupported");
+    };
+
+    /**
+     * Composes this function with another one
+     * For instance, (3x+1)^5 is a composition of x^5 (the outer function) with 3x+1
+     * (the inner function)
+     * 
+     * @param inner the inner function
+     * @return the composed function
+     */
+    public Function of(Function inner) {
+        if (inner instanceof Constant)
+            return Constant.of(evaluate(inner.evaluate(0))); // will just give us the value at 1
+        throw new RuntimeException("Method unsupported");
+    };
+
+    /**
      * Checks if the function is equal to another
      * 
      * @param other the function to compare to

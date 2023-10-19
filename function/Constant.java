@@ -39,4 +39,9 @@ public class Constant extends Function {
         return other;
     }
 
+    @Override
+    public Function of(Function inner) {
+        return this;
+    }
+
 }
