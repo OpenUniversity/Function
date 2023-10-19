@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Rperesents a linear combination of functions
  */
-public class LinearCombination extends Function implements Cloneable {
+public class LinearCombination extends Function {
 
     private ArrayList<Double> coefficients;
 
