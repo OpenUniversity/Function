@@ -1,22 +1,24 @@
 package function;
 
-import java.util.ArrayList;
+import utilities.vector.ArrayListVector;
+import utilities.vector.Scale;
+import utilities.vector.Vector;
 
 /**
- * Rperesents a linear combination of functions
+ * Rperesents a linear combination of functions.
+ * Functions are vectors!
+ * 
+ * @version 2
  */
 public class LinearCombination extends Function {
 
-    private ArrayList<Double> coefficients;
-
-    private ArrayList<Function> functions;
+    private Vector<Function> terms;
 
     /**
      * Constructs the 0 function
      */
     public LinearCombination() {
-        this.coefficients = new ArrayList<>();
-        this.functions = new ArrayList<>();
+        terms = new ArrayListVector<>();
     }
 
     /**
@@ -27,10 +29,7 @@ public class LinearCombination extends Function {
      */
     private LinearCombination(LinearCombination other) {
         this();
-        for (int i = 0; i < other.getSize(); i++) {
-            coefficients.add(other.coefficients.get(i));
-            functions.add(other.functions.get(i));
-        }
+        terms.append(other.terms, 1);
     }
 
     public static LinearCombination Scale(Function func, double scalar) {
@@ -43,14 +42,14 @@ public class LinearCombination extends Function {
      * @return the size of the linear combination
      */
     public int getSize() {
-        return functions.size();
+        return terms.dimensions();
     }
 
     @Override
     public double evaluate(double x) throws ArithmeticException {
         double value = 0;
-        for (int i = 0; i < functions.size(); i++) {
-            value += coefficients.get(i) * functions.get(i).evaluate(x);
+        for (Scale<Function> term : terms) {
+            value += term.getScalar() * term.getVector().evaluate(x);
         }
         return value;
     }
@@ -58,8 +57,8 @@ public class LinearCombination extends Function {
     @Override
     public Function derive() {
         LinearCombination derivative = new LinearCombination();
-        for (int i = 0; i < getSize(); i++) {
-            derivative.add(functions.get(i).derive(), coefficients.get(i));
+        for (Scale<Function> term : terms) {
+            derivative = (LinearCombination) derivative.plus(term.getVector().derive(), term.getScalar());
         }
         return derivative;
     }
@@ -72,8 +71,8 @@ public class LinearCombination extends Function {
         if (this.getSize() == 0)
             return "0";
 
-        for (int i = 0; i < getSize(); i++) {
-            result += substituteInTerm(x, prefixWithPlus, i);
+        for (Scale<Function> term : terms) {
+            result += substituteInTerm(prefixWithPlus, term.getScalar(), term.getVector().substitute(x, false));
             prefixWithPlus = true; // will evaluate to true after the first element
         }
 
@@ -83,18 +82,17 @@ public class LinearCombination extends Function {
         return result;
     }
 
-    private String substituteInTerm(String x, boolean prefixWithPlus, int i) {
-        String result = "", substitution = "";
+    private String substituteInTerm(boolean prefixWithPlus, double scalar, String substitution) {
+        String result = "";
         double coefficient;
         // determine sign
-        if (prefixWithPlus && coefficients.get(i) > 0)
+        if (prefixWithPlus && scalar > 0)
             result += "+";
-        else if (coefficients.get(i) < 0)
+        else if (scalar < 0)
             result += "-";
 
         // determine coefficient string
-        coefficient = Math.abs(coefficients.get(i));
-        substitution = functions.get(i).substitute(x, false);
+        coefficient = Math.abs(scalar);
         if (coefficient != 1 || substitution.isEmpty())
             result += coefficient;
 
@@ -121,58 +119,29 @@ public class LinearCombination extends Function {
      */
     public Function plus(Function other, double coefficient) {
         LinearCombination sum = new LinearCombination(this);
-        sum.add(other, coefficient);
-        return sum;
-    }
-
-    // recursive method to add stuff
-    private void add(Function other, double coefficient) {
-        // check if other function is a linear combination. If so, add each of its
-        // elements separately
-        if ((other instanceof LinearCombination)) {
+        if (other instanceof LinearCombination) { // if other is also a linear combination, add its terms separately
             LinearCombination combination = (LinearCombination) other;
-            for (int i = 0; i < combination.getSize(); i++) {
-                add(combination.functions.get(i), coefficient * combination.coefficients.get(i));
-            }
-            return;
-        }
-
-        // check if function already exists, and add to its coefficient if it does
-        for (int i = 0; i < getSize(); i++) {
-            if (!(functions.get(i).equals(other)))
-                continue;
-            double newCoefficient = coefficients.get(i) + coefficient;
-            if (newCoefficient == 0) {
-                functions.remove(i);
-                coefficients.remove(i);
-            } else
-                coefficients.set(i, newCoefficient);
-            return;
-        }
-
-        // need to add new record
-        if (coefficient != 0) {
-            coefficients.add(coefficient);
-            functions.add(other);
-        }
+            sum.terms.append(combination.terms, coefficient);
+        } else
+            sum.terms.add(other, coefficient);
+        return sum;
     }
 
     @Override
     public Function times(Function other) {
         LinearCombination product = new LinearCombination();
-        // check if other function is a linear combination. If so, add each of its
-        // elements separately
+        // if other factor is also a linear combination, we want to cross-add this.
         if (other instanceof LinearCombination) {
             // in such case, for instance (x+3)(x+4), this equates to (x+3)*x + (x+3)*4
             LinearCombination combination = (LinearCombination) other;
-            for (int i = 0; i < combination.getSize(); i++) {
-                product.add(this.times(combination.functions.get(i)), combination.coefficients.get(i));
+            for (Scale<Function> term : combination.terms) {
+                product.terms.append(((LinearCombination) this.times(term.getVector())).terms, term.getScalar());
             }
         } else {
             // this is the case of (x+3)*x, multiply each of this combination element's by
             // the other function
-            for (int i = 0; i < getSize(); i++) {
-                product.add(this.functions.get(i).times(other), this.coefficients.get(i));
+            for (Scale<Function> term : terms) {
+                product.terms.add(term.getVector().times(other), term.getScalar());
             }
         }
         return product;
@@ -195,17 +164,8 @@ public class LinearCombination extends Function {
     public boolean equals(Object other) {
         if (!(other instanceof Function))
             return false;
-        try {
-            LinearCombination compareTo = Scale((Function) other, 1);
-            for (int i = 0; i < getSize(); i++) {
-                if (!functions.get(i).equals(compareTo.functions.get(i))
-                        || coefficients.get(i) != compareTo.coefficients.get(i))
-                    return false;
-            }
-            return true;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return false;
-        }
+        LinearCombination compareTo = Scale((Function) other, 1);
+        return this.terms.equals(compareTo.terms);
     }
 
 }
