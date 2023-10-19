@@ -30,7 +30,9 @@ public class FunctionVector extends Function {
     }
 
     public static FunctionVector Scale(Function func, double scalar) {
-        return new FunctionVector().plus(func, scalar);
+        FunctionVector vec = new FunctionVector();
+        vec.add(func, scalar);
+        return vec;
     }
 
     /**
@@ -55,7 +57,7 @@ public class FunctionVector extends Function {
     public Function derive() {
         FunctionVector derivative = new FunctionVector();
         for (Scale<Function> term : terms) {
-            derivative = (FunctionVector) derivative.plus(term.getVector().derive(), term.getScalar());
+            derivative.add(term.getVector().derive(), term.getScalar());
         }
         return derivative;
     }
@@ -99,12 +101,16 @@ public class FunctionVector extends Function {
 
     @Override
     public Function plus(Function other) {
-        return this.plus(other, 1);
+        FunctionVector sum = new FunctionVector(this);
+        sum.add(other, 1);
+        return sum;
     }
 
     @Override
     public Function minus(Function other) {
-        return this.plus(other, -1);
+        FunctionVector diff = new FunctionVector(this);
+        diff.add(other, -1);
+        return diff;
     }
 
     /**
@@ -114,14 +120,12 @@ public class FunctionVector extends Function {
      * @param coefficient its desired coefficient
      * @return the new sum
      */
-    public FunctionVector plus(Function other, double coefficient) {
-        FunctionVector sum = new FunctionVector(this);
+    private void add(Function other, double coefficient) {
         if (other instanceof FunctionVector) { // if other is also a linear combination, add its terms separately
             FunctionVector combination = (FunctionVector) other;
-            sum.terms.append(combination.terms, coefficient);
+            terms.append(combination.terms, coefficient);
         } else
-            sum.terms.add(other, coefficient);
-        return sum;
+            terms.add(other, coefficient);
     }
 
     @Override
@@ -132,13 +136,13 @@ public class FunctionVector extends Function {
             // in such case, for instance (x+3)(x+4), this equates to (x+3)*x + (x+3)*4
             FunctionVector combination = (FunctionVector) other;
             for (Scale<Function> term : combination.terms) {
-                product.terms.append(((FunctionVector) this.times(term.getVector())).terms, term.getScalar());
+                product.add(this.times(term.getVector()), term.getScalar());
             }
         } else {
             // this is the case of (x+3)*x, multiply each of this combination element's by
             // the other function
             for (Scale<Function> term : terms) {
-                product.terms.add(term.getVector().times(other), term.getScalar());
+                product.add(term.getVector().times(other), term.getScalar());
             }
         }
         return product;
@@ -156,7 +160,7 @@ public class FunctionVector extends Function {
         // composition of vector != vector of compositions!!!
         FunctionVector composition = new FunctionVector();
         for (Scale<Function> term : terms) {
-            composition = composition.plus(term.getVector().compose(inner), term.getScalar());
+            composition.add(term.getVector().compose(inner), term.getScalar());
         }
         return composition;
     }
