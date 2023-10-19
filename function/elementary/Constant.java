@@ -1,17 +1,16 @@
 package function.elementary;
 
 import function.Function;
-import function.ValueNotInDomainException;
-import function.arithmetics.Scale;
+import function.LinearCombination;
 
 /**
  * Represents a function f(x)=1
- * DO NOT USE DIRECTLY! Always surround with a scale()
+ * DO NOT USE DIRECTLY! Always surround with a LinearCombination()
  */
 public class Constant extends Function {
 
     public static Function of(double scalar) {
-        return new Scale(scalar, new Constant());
+        return LinearCombination.Scale(new Constant(), scalar);
     }
 
     // to prevent usage outside of this class
@@ -19,25 +18,28 @@ public class Constant extends Function {
     }
 
     @Override
-    public double evaluate(double x) throws ValueNotInDomainException {
+    public double evaluate(double x) throws ArithmeticException {
         return 1;
     }
 
     @Override
     public Function derive() {
-        return Constant.of(0);
+        return new LinearCombination();
     }
 
     @Override
-    public String substitute(String x) {
+    public String substitute(String x, boolean parenthesize) {
         return "";
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null || !(obj instanceof Constant))
-            return false;
-        return true;
+    public boolean equals(Function other) {
+        return other instanceof Constant;
+    }
+
+    @Override
+    public Function times(Function other) {
+        return other;
     }
 
 }

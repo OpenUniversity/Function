@@ -1,39 +1,18 @@
 package function;
 
-import function.arithmetics.Scale;
-import function.elementary.Constant;
-
 /**
  * Represents a function in java
  */
 public abstract class Function {
 
     /**
-     * Return a constant that the function is multiplied by
-     * 
-     * @return the constant
-     */
-    public double getScalar() {
-        return 1;
-    }
-
-    /**
-     * Return the result of this / getScalar()
-     * 
-     * @return the function that is scaled
-     */
-    public Function getScaledFunction() {
-        return this;
-    }
-
-    /**
      * Evaluate the function in a given value
      * 
      * @param x the point to evaluate at
      * @return the value of f(x)
-     * @throws ValueNotInDomainException if value not in domain
+     * @throws ArithmeticException if value not in domain
      */
-    public abstract double evaluate(double x) throws ValueNotInDomainException;
+    public abstract double evaluate(double x) throws ArithmeticException;
 
     /**
      * Derive the function
@@ -45,34 +24,23 @@ public abstract class Function {
     /**
      * Show a string representation of the function
      * 
-     * @param x the value to substitute x for
+     * @param x            the value to substitute x for
+     * @param parenthesize is marked true if surrounding with parenthesis is
+     *                     nessecary
      * @return a string representation of the function
      */
-    public abstract String substitute(String x);
-
-    /**
-     * Calculates the negative of this function
-     * 
-     * @return the negated function
-     */
-    public Function negate() {
-        return new Scale(-1, this);
-    }
+    public abstract String substitute(String x, boolean parenthesize);
 
     /**
      * Creates the sum of this function with another one
      * 
      * @param other the function to try to add
      * @return the sum function
-     * @throws ArithmeticException if adding the two functions doesn't generate a
-     *                             simpler response
      */
-    public Function plus(Function other) throws ArithmeticException {
-        if (other.getScalar() == 0)
-            return this;
-        if (this.getScaledFunction().equals(other.getScaledFunction()))
-            return new Scale(this.getScalar() + other.getScalar(), this.getScaledFunction());
-        throw new ArithmeticException();
+    public Function plus(Function other) {
+        return new LinearCombination()
+                .plus(this)
+                .plus(other);
     }
 
     /**
@@ -80,10 +48,11 @@ public abstract class Function {
      * 
      * @param other the function to subtract
      * @return the difference function
-     * @throws ArithmeticException if functions cannot be subtarcted
      */
-    public Function minus(Function other) throws ArithmeticException {
-        return this.plus(other.negate());
+    public Function minus(Function other) {
+        return new LinearCombination()
+                .plus(this)
+                .minus(other);
     }
 
     /**
@@ -91,21 +60,24 @@ public abstract class Function {
      * 
      * @param other the function to multiply by
      * @return the product function
-     * @throws ArithmeticException if functions cannot be subtarcted
      */
-    public Function times(Function other) throws ArithmeticException {
-        if (other.getScalar() == 0 || this.getScalar() == 0)
-            return Constant.of(0);
-        if (other.getScaledFunction() instanceof Constant)
-            return new Scale(other.getScalar(), this);
-        if (this.getScaledFunction() instanceof Constant)
-            return new Scale(this.getScalar(), other);
-        throw new ArithmeticException();
-    }
+    public Function times(Function other) {
+        if (other instanceof LinearCombination)
+            return other.times(this);
+        throw new RuntimeException("Method unsupported");
+    };
+
+    /**
+     * Checks if the function is equal to another
+     * 
+     * @param other the function to compare to
+     * @return true if equal, false otherwise
+     */
+    public abstract boolean equals(Function other);
 
     @Override
     public String toString() {
-        return this.substitute("x");
+        return this.substitute("x", false);
     }
 
 }

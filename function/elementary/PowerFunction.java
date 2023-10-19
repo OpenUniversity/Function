@@ -1,8 +1,7 @@
 package function.elementary;
 
 import function.Function;
-import function.ValueNotInDomainException;
-import function.arithmetics.Scale;
+import function.LinearCombination;
 
 /**
  * Represents a function in the form of x^power, where power is a real number
@@ -23,7 +22,9 @@ public class PowerFunction extends Function {
     }
 
     @Override
-    public double evaluate(double x) throws ValueNotInDomainException {
+    public double evaluate(double x) {
+        if (power < 0 && x == 0)
+            throw new ArithmeticException("Can't divide by 0");
         return Math.pow(x, power);
     }
 
@@ -31,27 +32,38 @@ public class PowerFunction extends Function {
     public Function derive() {
         if (power == 1)
             return Constant.of(1); // [x^1]' = 1
-        return new Scale(power, new PowerFunction(power - 1));
+        return LinearCombination.Scale(new PowerFunction(power - 1), power); // [x^n]'=nx^(n-1)
     }
 
     @Override
-    public String substitute(String x) {
+    public String substitute(String x, boolean parenthesize) {
         if (power < 0) {
             Function denominator = new PowerFunction(Math.abs(power));
-            return "1 / " + denominator.substitute(x);
+            return "1 / " + denominator.substitute(x, parenthesize);
         }
-        if (power == 0)
-            return "1";
         if (power == 1)
             return x;
         return x + "^" + power;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null || !(obj instanceof PowerFunction))
+    public boolean equals(Function other) {
+        if (!(other instanceof PowerFunction))
             return false;
-        return this.power == ((PowerFunction) obj).power;
+        return this.power == ((PowerFunction) other).power;
+    }
+
+    @Override
+    public Function times(Function other) {
+        if (other instanceof Constant)
+            return this;
+
+        if (other instanceof PowerFunction) {
+            double otherPower = ((PowerFunction) other).power;
+            return new PowerFunction(power + otherPower);
+        }
+
+        return super.times(other);
     }
 
 }
