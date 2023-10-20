@@ -63,11 +63,11 @@ public abstract class Vector<VecType> implements Iterable<Scale<VecType>> {
 
     @Override
     public String toString() {
-        String result = "(";
+        String result = "[";
         for (Scale<VecType> scale : this) {
-            result += scale.getScalar() + ";" + scale.getVector() + "\t;";
+            result += scale.getScalar() + "" + scale.getVector() + ",\t";
         }
-        result += ")";
+        result += "]";
         return result;
     }
 

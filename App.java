@@ -3,7 +3,7 @@ import function.Function;
 import function.arithmetics.Compose;
 import function.arithmetics.Product;
 import function.elementary.PowerFunction;
-import utilities.vector.ArrayListVector;
+import utilities.vector.MapVector;
 import utilities.vector.Vector;
 
 public class App {
@@ -12,7 +12,7 @@ public class App {
     }
 
     public static void vectorTest() {
-        Vector<Character> vec1 = new ArrayListVector<>();
+        Vector<Character> vec1 = new MapVector<>();
         System.out.println(vec1);
         vec1.add('a', 1);
         System.out.println(vec1);
@@ -21,8 +21,8 @@ public class App {
         vec1.add('a', 2);
         System.out.println(vec1);
 
-        Vector<Character> vec2 = new ArrayListVector<>();
-        vec2.add('a', 2);
+        Vector<Character> vec2 = new MapVector<>();
+        vec2.add('a', -3);
         System.out.println(vec2);
         vec2.append(vec1, 1);
         System.out.println(vec2);

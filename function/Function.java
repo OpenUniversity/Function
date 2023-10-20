@@ -112,4 +112,8 @@ public abstract class Function {
         return this.substitute("x", false);
     }
 
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
 }
