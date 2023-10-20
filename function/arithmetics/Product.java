@@ -32,6 +32,22 @@ public class Product extends FunctionArithmetic {
     }
 
     @Override
+    public Function times(Function other) {
+        Function prod;
+        // try resolving to the left
+        prod = left.times(other);
+        if (!(prod instanceof Product))
+            return new Product(prod, right);
+
+        // try resolving to the right
+        prod = right.times(other);
+        if (!(prod instanceof Product))
+            return new Product(left, prod);
+
+        return super.times(other);
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (!(other instanceof Product))
             return false;

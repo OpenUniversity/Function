@@ -54,6 +54,11 @@ public class App {
         System.out.println(fg2);
         System.out.println(fg2.derive());
 
+        System.out.println("\n\n\n fg2f");
+        Function fg2f = fg2.times(f);
+        System.out.println(fg2f);
+        System.out.println(fg2f.derive());
+
         System.out.println("\n\n\n f compose g unsimplified");
         Function fofg = new Compose(f, g);
         System.out.println(fofg);
