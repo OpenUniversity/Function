@@ -22,4 +22,12 @@ public abstract class FunctionArithmetic extends Function {
         this.right = right;
     }
 
+    public Function getLeft() {
+        return left;
+    }
+
+    public Function getRight() {
+        return right;
+    }
+
 }

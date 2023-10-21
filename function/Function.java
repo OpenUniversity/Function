@@ -96,6 +96,10 @@ public abstract class Function {
     public Function compose(Function inner) {
         if (inner instanceof Constant)
             return Constant.of(evaluate(inner.evaluate(0))); // will just give us the value at 1
+        if (inner instanceof Compose) { // function composition is associative
+            Compose comp = (Compose) inner;
+            return this.compose(comp.getLeft()).compose(comp.getRight());
+        }
         return new Compose(this, inner);
     };
 
