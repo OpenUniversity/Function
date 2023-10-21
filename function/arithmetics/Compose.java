@@ -28,12 +28,4 @@ public class Compose extends FunctionArithmetic {
         return left.substitute(innerSub);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Compose))
-            return false;
-        Compose comp = (Compose) obj;
-        return left.equals(comp.left) && right.equals(comp.right);
-    }
-
 }

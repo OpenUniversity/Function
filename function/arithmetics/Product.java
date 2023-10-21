@@ -34,6 +34,9 @@ public class Product extends FunctionArithmetic {
     @Override
     public Function times(Function other) {
         Function prod;
+        if (other instanceof Quotient)
+            return other.times(this);
+
         // try resolving to the left
         prod = left.times(other);
         if (!(prod instanceof Product))

@@ -31,9 +31,12 @@ public class Quotient extends FunctionArithmetic {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'equals'");
+    public Function times(Function other) {
+        return left.times(other).div(right);
+    }
+
+    public Function div(Function other) {
+        return left.div(right.times(other));
     }
 
 }

@@ -1,5 +1,7 @@
 package function;
 
+import function.elementary.PowerFunction;
+
 /**
  * Represents a function f(x)=1
  * DO NOT USE DIRECTLY! Always surround with a LinearCombination()
@@ -43,6 +45,11 @@ public class Constant extends Function {
     @Override
     public Function times(Function other) {
         return other;
+    }
+
+    @Override
+    public Function div(Function other) {
+        return PowerFunction.of(-1).compose(other);
     }
 
     @Override

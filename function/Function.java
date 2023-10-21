@@ -81,7 +81,7 @@ public abstract class Function {
     public Function times(Function other) {
         if (other instanceof Constant)
             return this;
-        if (other instanceof FunctionVector)
+        if (other instanceof FunctionVector || other instanceof Product || other instanceof Quotient)
             return other.times(this);
         return new Product(this, other);
     };
@@ -95,6 +95,10 @@ public abstract class Function {
     public Function div(Function other) {
         if (other instanceof Constant)
             return this;
+        if (other instanceof Quotient) {
+            Quotient quo = (Quotient) other;
+            return this.times(quo.getRight()).div(quo.getLeft());
+        }
         return new Quotient(this, other);
     };
 

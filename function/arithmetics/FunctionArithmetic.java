@@ -30,4 +30,12 @@ public abstract class FunctionArithmetic extends Function {
         return right;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (!getClass().equals(other.getClass()))
+            return false;
+        FunctionArithmetic arithmetic = (FunctionArithmetic) other;
+        return left == arithmetic.left && right == arithmetic.right;
+    }
+
 }
