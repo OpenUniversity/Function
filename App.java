@@ -5,12 +5,32 @@ import function.arithmetics.Compose;
 import function.arithmetics.Product;
 import function.elementary.PowerFunction;
 import function.trigonometric.Sine;
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import plot.CartesianAxes;
 import vector.MapVector;
 import vector.Vector;
 
-public class App {
+public class App extends Application {
     public static void main(String[] args) throws Exception {
-        functionTest();
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        Canvas canvas = new Canvas(400, 400);
+        CartesianAxes axes = new CartesianAxes(-8, 8, -7, 8, canvas.getWidth(), canvas.getHeight());
+        StackPane layout = new StackPane(canvas);
+        layout.setPadding(new Insets(20));
+
+        stage.setTitle("y = \u00BC(x+4)(x+1)(x-2)");
+        stage.setScene(new Scene(layout));
+        stage.show();
+        axes.draw(canvas.getGraphicsContext2D());
     }
 
     public static void vectorTest() {
@@ -86,4 +106,5 @@ public class App {
         System.out.println(sineOfNegF);
         System.out.println(sineOfNegF.derive());
     }
+
 }
