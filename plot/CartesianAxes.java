@@ -4,15 +4,14 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class CartesianAxes implements Drawable {
 
-    public static final int MIN_NUM_OF_STEPS = 9;
-    public static final int MAX_NUM_OF_STEPS = 17;
+    public static final int STEP_SIZE_PX = 30;
     public static final int MARKING_SIZE_PX = 10;
 
     private double canvasWidth, canvasHeight;
     private double xAxisLocation; // the y coordinate of the x axis in the canvas
     private double yAxisLocation; // the x coordinate of the y axis in the canvas
-    private int xScale; // the scale of the x markings
-    private int yScale; // the scale of the y marking
+    private int xScale; // the scale of the x markings. i.e - how many units will each step contain
+    private int yScale; // the scale of the y marking, i.e - how many units will each step contain
     private double minX, maxX, minY, maxY;
 
     public CartesianAxes(double minX, double maxX, double minY, double maxY, double canvasWidth, double canvasHeight) {
@@ -24,8 +23,8 @@ public class CartesianAxes implements Drawable {
         this.canvasHeight = canvasHeight;
         yAxisLocation = getAxisLocation(this.minX, this.maxX, canvasWidth); // the x coord of the y axis
         xAxisLocation = canvasHeight - getAxisLocation(this.minY, this.maxY, canvasHeight); // the y coord of the x axis
-        xScale = getScale(this.minX, this.maxX);
-        yScale = getScale(this.minY, this.maxY);
+        xScale = getScale(this.minX, this.maxX, canvasWidth);
+        yScale = getScale(this.minY, this.maxY, canvasHeight);
     }
 
     private double getAxisLocation(double minValue, double maxValue, double dimensionSize) {
@@ -33,18 +32,10 @@ public class CartesianAxes implements Drawable {
         return dimensionSize * negativePercentage;
     }
 
-    private int getScale(double minValue, double maxValue) {
-        double span = maxValue - minValue, minDifference = Double.MAX_VALUE, currentDifference;
-        int currentScale, minDifferenceScale = 1;
-        for (int currentNumOfSteps = MAX_NUM_OF_STEPS; currentNumOfSteps >= MIN_NUM_OF_STEPS; currentNumOfSteps--) {
-            currentScale = (int) Math.ceil(span / currentNumOfSteps);
-            currentDifference = Math.abs(span - currentScale * currentNumOfSteps);
-            if (currentDifference < minDifference) {
-                minDifference = currentDifference;
-                minDifferenceScale = currentScale;
-            }
-        }
-        return minDifferenceScale;
+    private int getScale(double minValue, double maxValue, double dimSize) {
+        double steps = dimSize / STEP_SIZE_PX;
+        double units = (maxValue - minValue);
+        return (int) Math.ceil(steps / units);
     }
 
     @Override
