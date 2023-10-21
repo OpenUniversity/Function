@@ -1,8 +1,10 @@
 import function.Constant;
 import function.Function;
+import function.FunctionVector;
 import function.arithmetics.Compose;
 import function.arithmetics.Product;
 import function.elementary.PowerFunction;
+import function.trigonometric.Sine;
 import utilities.vector.MapVector;
 import utilities.vector.Vector;
 
@@ -78,5 +80,10 @@ public class App {
         Function foverg = f.div(g);
         System.out.println(foverg);
         System.out.println(foverg.derive());
+
+        System.out.println("\n\n\n sin(-x^2)");
+        Function sineOfNegF = new Sine().compose(FunctionVector.scale(PowerFunction.of(2), -1));
+        System.out.println(sineOfNegF);
+        System.out.println(sineOfNegF.derive());
     }
 }

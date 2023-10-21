@@ -29,10 +29,22 @@ public class FunctionVector extends Function {
         terms.append(other.terms, 1);
     }
 
-    public static FunctionVector Scale(Function func, double scalar) {
+    public static FunctionVector scale(Function func, double scalar) {
         FunctionVector vec = new FunctionVector();
         vec.add(func, scalar);
         return vec;
+    }
+
+    public static Scale<Function> getScale(Function func) {
+        if (!(func instanceof FunctionVector))
+            return new Scale<Function>(1, func);
+        FunctionVector vec = (FunctionVector) func;
+        if (vec.getSize() != 1)
+            return new Scale<Function>(1, func);
+        for (Scale<Function> term : vec.terms) { // remember there is only one
+            return term;
+        }
+        throw new Error(); // should not get here;
     }
 
     /**
@@ -169,7 +181,7 @@ public class FunctionVector extends Function {
     public boolean equals(Object other) {
         if (!(other instanceof Function))
             return false;
-        FunctionVector compareTo = Scale((Function) other, 1);
+        FunctionVector compareTo = scale((Function) other, 1);
         return this.terms.equals(compareTo.terms);
     }
 

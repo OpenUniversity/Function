@@ -40,7 +40,7 @@ public class PowerFunction extends Function {
     public Function derive() {
         if (power == 1)
             return Constant.of(1); // [x^1]' = 1
-        return FunctionVector.Scale(new PowerFunction(power - 1), power); // [x^n]'=nx^(n-1)
+        return FunctionVector.scale(new PowerFunction(power - 1), power); // [x^n]'=nx^(n-1)
     }
 
     @Override
