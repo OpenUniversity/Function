@@ -1,4 +1,4 @@
-package utilities.vector;
+package vector;
 
 /**
  * Represents a data structure for a sum of vectors.

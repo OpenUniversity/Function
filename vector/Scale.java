@@ -1,4 +1,4 @@
-package utilities.vector;
+package vector;
 
 /**
  * Represents a vector scaled by a scalar

@@ -5,8 +5,8 @@ import function.arithmetics.Compose;
 import function.arithmetics.Product;
 import function.elementary.PowerFunction;
 import function.trigonometric.Sine;
-import utilities.vector.MapVector;
-import utilities.vector.Vector;
+import vector.MapVector;
+import vector.Vector;
 
 public class App {
     public static void main(String[] args) throws Exception {

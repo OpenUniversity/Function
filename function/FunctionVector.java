@@ -1,8 +1,8 @@
 package function;
 
-import utilities.vector.ArrayListVector;
-import utilities.vector.Scale;
-import utilities.vector.Vector;
+import vector.ArrayListVector;
+import vector.Scale;
+import vector.Vector;
 
 /**
  * Rperesents a linear combination of functions.
