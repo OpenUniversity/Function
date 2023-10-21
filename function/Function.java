@@ -28,12 +28,25 @@ public abstract class Function {
     /**
      * Show a string representation of the function
      * 
+     * @param x the value to substitute x for
+     * @return a string representation of the function
+     */
+    public abstract String substitute(String x);
+
+    /**
+     * Show a string representation of the function
+     * 
      * @param x            the value to substitute x for
      * @param parenthesize is marked true if surrounding with parenthesis is
      *                     nessecary
      * @return a string representation of the function
      */
-    public abstract String substitute(String x, boolean parenthesize);
+    public String substitute(String x, boolean parenthesize) {
+        String result = this.substitute(x);
+        if (parenthesize)
+            result = "(" + result + ")";
+        return result;
+    }
 
     /**
      * Creates the sum of this function with another one

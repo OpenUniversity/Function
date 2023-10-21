@@ -23,9 +23,9 @@ public class Compose extends FunctionArithmetic {
     }
 
     @Override
-    public String substitute(String x, boolean parenthesize) {
+    public String substitute(String x) {
         String innerSub = right.substitute(x, true);
-        return left.substitute(innerSub, parenthesize);
+        return left.substitute(innerSub);
     }
 
     @Override

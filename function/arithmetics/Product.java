@@ -27,7 +27,7 @@ public class Product extends FunctionArithmetic {
     }
 
     @Override
-    public String substitute(String x, boolean parenthesize) {
+    public String substitute(String x) {
         return left.substitute(x, true) + " * " + right.substitute(x, true);
     }
 

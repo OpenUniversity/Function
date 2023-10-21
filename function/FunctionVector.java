@@ -35,16 +35,16 @@ public class FunctionVector extends Function {
         return vec;
     }
 
-    public static Scale<Function> getScale(Function func) {
+    public static double getScalar(Function func) {
         if (!(func instanceof FunctionVector))
-            return new Scale<Function>(1, func);
+            return 1;
         FunctionVector vec = (FunctionVector) func;
         if (vec.getSize() != 1)
-            return new Scale<Function>(1, func);
+            return 1;
         for (Scale<Function> term : vec.terms) { // remember there is only one
-            return term;
+            return term.getScalar();
         }
-        throw new Error(); // should not get here;
+        return 1; // should not get here;
     }
 
     /**
@@ -75,7 +75,7 @@ public class FunctionVector extends Function {
     }
 
     @Override
-    public String substitute(String x, boolean parenthesize) {
+    public String substitute(String x) {
         boolean prefixWithPlus = false;
         String result = "";
 
@@ -86,9 +86,6 @@ public class FunctionVector extends Function {
             result += substituteInTerm(prefixWithPlus, term.getScalar(), term.getVector().substitute(x, false));
             prefixWithPlus = true; // will evaluate to true after the first element
         }
-
-        if (parenthesize)
-            result = "(" + result + ")";
 
         return result;
     }

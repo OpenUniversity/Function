@@ -25,8 +25,14 @@ public class Constant extends Function {
     }
 
     @Override
-    public String substitute(String x, boolean parenthesize) {
+    public String substitute(String x) {
         return "";
+    }
+
+    @Override
+    public String substitute(String x, boolean parenthesize) {
+        // here, we override the default behavior, and return an empty string nontheless
+        return substitute(x);
     }
 
     @Override

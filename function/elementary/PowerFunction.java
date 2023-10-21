@@ -44,10 +44,10 @@ public class PowerFunction extends Function {
     }
 
     @Override
-    public String substitute(String x, boolean parenthesize) {
+    public String substitute(String x) {
         if (power < 0) {
             Function denominator = new PowerFunction(Math.abs(power));
-            return "1 / " + denominator.substitute(x, parenthesize);
+            return "1 / " + denominator.substitute(x);
         }
         if (power == 1)
             return x;

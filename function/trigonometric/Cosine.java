@@ -2,7 +2,6 @@ package function.trigonometric;
 
 import function.Function;
 import function.FunctionVector;
-import utilities.vector.Scale;
 
 public class Cosine extends TrigFunction {
 
@@ -25,9 +24,8 @@ public class Cosine extends TrigFunction {
     public Function compose(Function inner) {
 
         // apply identity cos(-x)=cos x
-        Scale<Function> scale = FunctionVector.getScale(inner);
-        if (scale.getScalar() < 0)
-            return super.compose(FunctionVector.scale(scale.getVector(), -1 * scale.getScalar()));
+        if (FunctionVector.getScalar(inner) < 0)
+            return super.compose(FunctionVector.scale(inner, -1));
 
         return super.compose(inner);
     }

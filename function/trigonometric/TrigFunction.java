@@ -7,11 +7,8 @@ public abstract class TrigFunction extends Function {
     public abstract String getName();
 
     @Override
-    public String substitute(String x, boolean parenthesize) {
-        String result = getName() + x;
-        if (parenthesize)
-            result = "(" + result + ")"; // for (sin x)^2, etc...
-        return result;
+    public String substitute(String x) {
+        return getName() + x;
     }
 
     @Override
