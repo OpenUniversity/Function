@@ -1,5 +1,6 @@
 import function.Function;
-import function.trigonometric.Sine;
+import function.elementary.PowerFunction;
+import function.trigonometric.Cosine;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -18,8 +19,8 @@ public class App extends Application {
         StackPane layout = new StackPane(canvas);
         layout.setPadding(new Insets(20));
 
-        Function f = new Sine();
-        canvas.addFunction(f, 0, 8, Color.DARKCYAN, 1);
+        Function f = PowerFunction.of(1).times(new Cosine());
+        canvas.addFunction(f, 0, 9, Color.DARKCYAN, 2);
 
         stage.setTitle(f.toString());
         stage.setScene(new Scene(layout));

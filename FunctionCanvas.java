@@ -14,7 +14,7 @@ public class FunctionCanvas extends CurveCanvas {
     public void addFunction(Function func, double startX, double endX, Color color, int numOfDerivatives) {
         addCurve(new FunctionCurve(func, startX, endX, color));
         for (int i = 0; i < numOfDerivatives; i++) {
-            color = color.brighter().brighter();
+            color = color.brighter();
             func = func.derive();
             addCurve(new FunctionCurve(func, startX, endX, color));
         }
