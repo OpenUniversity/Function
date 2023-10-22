@@ -34,8 +34,7 @@ public class CartesianAxesCanvas extends Canvas {
     }
 
     public void expandYAxis(double y) {
-        if (yAxis.expandTo(y))
-            System.out.println("Expanded y to " + y);
+        yAxis.expandTo(y);
     }
 
     public void strokeLine(Point2D p1, Point2D p2) {

@@ -1,11 +1,10 @@
-import curve.CurveCanvas;
-import curve.EvaluationCurve;
 import function.Function;
 import function.trigonometric.Sine;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -15,11 +14,12 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        CurveCanvas canvas = new CurveCanvas(400, 400);
+        FunctionCanvas canvas = new FunctionCanvas(400, 400);
         StackPane layout = new StackPane(canvas);
-        Function f = new Sine();
-        canvas.addCurve(new EvaluationCurve(f::evaluate, 0, 8));
         layout.setPadding(new Insets(20));
+
+        Function f = new Sine();
+        canvas.addFunction(f, 0, 8, Color.DARKCYAN, 1);
 
         stage.setTitle(f.toString());
         stage.setScene(new Scene(layout));
