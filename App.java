@@ -12,7 +12,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import plot.UnitCircle;
-import plot.axes.CartesianAxes;
 import vector.MapVector;
 import vector.Vector;
 
@@ -24,15 +23,14 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Canvas canvas = new Canvas(400, 400);
-        CartesianAxes axes = new CartesianAxes(-1, 1, -1, 1, canvas.getWidth(), canvas.getHeight());
         StackPane layout = new StackPane(canvas);
+        UnitCircle circ = new UnitCircle(canvas.getWidth(), canvas.getHeight());
         layout.setPadding(new Insets(20));
 
         stage.setTitle("y = \u00BC(x+4)(x+1)(x-2)");
         stage.setScene(new Scene(layout));
         stage.show();
-        axes.draw(canvas.getGraphicsContext2D());
-        UnitCircle circ = new UnitCircle(axes);
+        circ.getAxes().draw(canvas.getGraphicsContext2D());
         circ.draw(canvas.getGraphicsContext2D());
     }
 

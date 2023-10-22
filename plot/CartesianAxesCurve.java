@@ -8,12 +8,21 @@ import plot.axes.CartesianAxes;
 /**
  * Represents a curve that should be drawn in relation to cartesian axes
  */
-public abstract class CatesianAxesCurve extends Curve {
+public abstract class CartesianAxesCurve extends Curve {
 
     private CartesianAxes axes;
 
-    public CatesianAxesCurve(CartesianAxes axes) {
+    public CartesianAxesCurve(CartesianAxes axes) {
         this.axes = axes;
+    }
+
+    public CartesianAxesCurve(double width, double height) {
+        this.calculateBounds();
+        this.axes = new CartesianAxes(this, width, height);
+    }
+
+    public CartesianAxes getAxes() {
+        return axes;
     }
 
     /**

@@ -2,11 +2,12 @@ package plot;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import plot.axes.Boundable;
 
 /**
  * Represents something that can be drawn
  */
-public abstract class Curve implements Drawable, Iterable<Point2D> {
+public abstract class Curve implements Drawable, Iterable<Point2D>, Boundable {
 
     @Override
     public void draw(GraphicsContext gc) {

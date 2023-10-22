@@ -16,6 +16,10 @@ public class CartesianAxes implements Drawable {
         this.yAxis.setLocation(xAxis.getOriginLocationPx());
     }
 
+    public CartesianAxes(Boundable bounds, double width, double height) {
+        this(bounds.getStartX(), bounds.getEndX(), bounds.getStartY(), bounds.getEndY(), width, height);
+    }
+
     @Override
     public void draw(GraphicsContext gc) {
         this.xAxis.draw(gc);
