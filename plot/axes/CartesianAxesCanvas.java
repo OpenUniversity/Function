@@ -13,11 +13,15 @@ public class CartesianAxesCanvas extends BoundedCanvas {
 
     public CartesianAxesCanvas(double width, double height) {
         super(width, height);
-        setAxes();
     }
 
     protected void setAxes() {
         axes = new CartesianAxes(bounds, getWidth(), getHeight());
+    }
+
+    @Override
+    protected void resetBounds() {
+        super.resetBounds();
     }
 
     @Override

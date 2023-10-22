@@ -8,12 +8,11 @@ import function.trigonometric.Sine;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import plot.axes.CartesianAxesCanvas;
-import plot.bounded.Bounded;
+import plot.CurveCanvas;
 import plot.curve.EvaluationCurve;
+import plot.curve.UnitCircle;
 import vector.MapVector;
 import vector.Vector;
 
@@ -24,12 +23,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        CartesianAxesCanvas canvas = new CartesianAxesCanvas(400, 400);
-        canvas.expandBounds(new Bounded(-5, 5, -5, 5));
+        CurveCanvas canvas = new CurveCanvas(400, 400);
+        canvas.addCurve(new UnitCircle());
         StackPane layout = new StackPane(canvas);
-        Function f = (PowerFunction.of(2).plus(Constant.of(5))).div(PowerFunction.of(1));
-        // EvaluationCurve curve = new EvaluationCurve(f::evaluate, -5, 5,
-        // canvas.getWidth(), canvas.getHeight());
+        Function f = PowerFunction.of(2).plus(Constant.of(5));
+        canvas.addCurve(new EvaluationCurve(f::evaluate, -5, 5));
         layout.setPadding(new Insets(20));
 
         stage.setTitle(f.toString());

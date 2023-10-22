@@ -14,8 +14,12 @@ public abstract class BoundedCanvas extends Canvas {
 
     public BoundedCanvas(double width, double height) {
         super(width, height);
-        bounds = new Bounded();
         this.gc = getGraphicsContext2D();
+        resetBounds();
+    }
+
+    protected void resetBounds() {
+        bounds = new Bounded();
     }
 
     protected void expandBounds(Boundable expand) {
@@ -40,6 +44,7 @@ public abstract class BoundedCanvas extends Canvas {
 
     public void draw() {
         // TODO: Check if bounds are defined
+        clear();
         drawInBounds();
     }
 

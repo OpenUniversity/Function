@@ -1,7 +1,6 @@
-package plot;
+package plot.curve;
 
 import javafx.geometry.Point2D;
-import plot.curve.Curve;
 
 public class UnitCircle extends Curve {
 
