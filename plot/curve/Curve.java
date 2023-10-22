@@ -1,7 +1,9 @@
-package plot;
+package plot.curve;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import plot.Boundable;
+import plot.Drawable;
 
 /**
  * Represents something that can be drawn

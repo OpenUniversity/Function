@@ -5,13 +5,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import javafx.geometry.Point2D;
+import plot.curve.CartesianAxesCurve;
 
 public class UnitCircle extends CartesianAxesCurve {
 
     private List<Point2D> points;
 
     public UnitCircle(double width, double height) {
-        super(width, height);
+        super();
         points = new ArrayList<>();
         // Add Positive Points
         for (double x = -1; x <= 1; x += 0.01) {
@@ -21,11 +22,6 @@ public class UnitCircle extends CartesianAxesCurve {
         for (double x = 1; x >= -1; x -= 0.01) {
             points.add(new Point2D(x, -eval(x)));
         }
-    }
-
-    @Override
-    public void calculateBounds() {
-
     }
 
     @Override

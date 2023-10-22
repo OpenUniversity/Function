@@ -1,4 +1,4 @@
-package plot;
+package plot.curve;
 
 import java.util.Iterator;
 
@@ -10,15 +10,13 @@ import plot.axes.CartesianAxes;
  */
 public abstract class CartesianAxesCurve extends Curve {
 
-    private CartesianAxes axes;
+    protected CartesianAxes axes;
+
+    public CartesianAxesCurve() {
+    }
 
     public CartesianAxesCurve(CartesianAxes axes) {
         this.axes = axes;
-    }
-
-    public CartesianAxesCurve(double width, double height) {
-        this.calculateBounds();
-        this.axes = new CartesianAxes(this, width, height);
     }
 
     public CartesianAxes getAxes() {

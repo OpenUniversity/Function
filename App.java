@@ -12,6 +12,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import plot.UnitCircle;
+import plot.curve.EvaluationCurve;
 import vector.MapVector;
 import vector.Vector;
 
@@ -24,14 +25,15 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         Canvas canvas = new Canvas(400, 400);
         StackPane layout = new StackPane(canvas);
-        UnitCircle circ = new UnitCircle(canvas.getWidth(), canvas.getHeight());
+        Function f = new PowerFunction(2).plus(Constant.of(5));
+        EvaluationCurve curve = new EvaluationCurve(f::evaluate, -5, 5, canvas.getWidth(), canvas.getHeight());
         layout.setPadding(new Insets(20));
 
-        stage.setTitle("y = \u00BC(x+4)(x+1)(x-2)");
+        stage.setTitle(f.toString());
         stage.setScene(new Scene(layout));
         stage.show();
-        circ.getAxes().draw(canvas.getGraphicsContext2D());
-        circ.draw(canvas.getGraphicsContext2D());
+        curve.getAxes().draw(canvas.getGraphicsContext2D());
+        curve.draw(canvas.getGraphicsContext2D());
     }
 
     public static void vectorTest() {

@@ -5,8 +5,6 @@ package plot;
  */
 public interface Boundable {
 
-    public void calculateBounds();
-
     public double getStartX();
 
     public double getEndX();
