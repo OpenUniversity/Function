@@ -5,11 +5,11 @@ package range;
  */
 public class Range {
 
-    private double start;
-    private double end;
+    protected double start;
+    protected double end;
 
     public Range() {
-        this(Double.MAX_VALUE, Double.MIN_VALUE);
+        this(0, 0);
     }
 
     public Range(double start, double end) {
@@ -35,6 +35,28 @@ public class Range {
 
     public void expandEnd(double x) {
         end = Math.max(end, x);
+    }
+
+    /**
+     * Expand the range to include the number x
+     * 
+     * @param x the number to include in the range
+     * @return true if the range was modified, false othereise
+     */
+    public boolean expandTo(double x) {
+        if (start > x) {
+            start = x;
+            return true;
+        }
+        if (end < x) {
+            end = x;
+            return true;
+        }
+        return false;
+    }
+
+    public double getLength() {
+        return end - start;
     }
 
 }

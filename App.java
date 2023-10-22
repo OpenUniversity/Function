@@ -7,12 +7,11 @@ import function.elementary.PowerFunction;
 import function.trigonometric.Sine;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import plot.CurveCanvas;
-import plot.curve.EvaluationCurve;
-import plot.curve.UnitCircle;
+import plot.CartesianAxesCanvas;
 import vector.MapVector;
 import vector.Vector;
 
@@ -23,17 +22,21 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        CurveCanvas canvas = new CurveCanvas(400, 400);
-        canvas.addCurve(new UnitCircle());
+        CartesianAxesCanvas canvas = new CartesianAxesCanvas(400, 400);
+        canvas.expandXAxis(4);
+        canvas.expandXAxis(-2);
+        canvas.expandYAxis(9);
+        canvas.expandYAxis(-3);
         StackPane layout = new StackPane(canvas);
-        Function f = PowerFunction.of(2).plus(Constant.of(5));
-        canvas.addCurve(new EvaluationCurve(f::evaluate, -5, 5));
+        Function f = new Sine();
+        // canvas.addCurve(new EvaluationCurve(f::evaluate, -5, 5));
         layout.setPadding(new Insets(20));
 
         stage.setTitle(f.toString());
         stage.setScene(new Scene(layout));
         stage.show();
-        canvas.draw();
+        canvas.drawAxes();
+        canvas.strokeLine(new Point2D(0, 3), new Point2D(2, 0));
     }
 
     public static void vectorTest() {

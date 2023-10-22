@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Point2D;
-import plot.axes.CartesianAxesCanvas;
 import plot.curve.Curve;
 
 /**
