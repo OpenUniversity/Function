@@ -11,7 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import plot.CartesianAxes;
+import plot.axes.CartesianAxes;
 import vector.MapVector;
 import vector.Vector;
 
