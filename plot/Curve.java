@@ -2,7 +2,6 @@ package plot;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
-import plot.axes.Boundable;
 
 /**
  * Represents something that can be drawn

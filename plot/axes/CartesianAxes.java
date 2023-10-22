@@ -2,6 +2,7 @@ package plot.axes;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import plot.Boundable;
 import plot.Drawable;
 
 public class CartesianAxes implements Drawable {

@@ -1,4 +1,4 @@
-package plot.axes;
+package plot;
 
 /**
  * Represents a rectangle subset of the two dimentional plane
