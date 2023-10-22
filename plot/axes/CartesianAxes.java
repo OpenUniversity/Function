@@ -1,5 +1,6 @@
 package plot.axes;
 
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import plot.Drawable;
 
@@ -19,6 +20,12 @@ public class CartesianAxes implements Drawable {
     public void draw(GraphicsContext gc) {
         this.xAxis.draw(gc);
         this.yAxis.draw(gc);
+    }
+
+    public Point2D unitsToPx(Point2D point) {
+        double x = xAxis.unitsToPx(point.getX());
+        double y = yAxis.unitsToPx(point.getY());
+        return new Point2D(x, y);
     }
 
 }
