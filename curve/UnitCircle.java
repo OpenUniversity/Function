@@ -1,4 +1,4 @@
-package plot.curve;
+package curve;
 
 import javafx.geometry.Point2D;
 
@@ -18,26 +18,6 @@ public class UnitCircle extends Curve {
 
     private double eval(double x) {
         return Math.sqrt(1 - Math.pow(x, 2));
-    }
-
-    @Override
-    public double getStartX() {
-        return -1;
-    }
-
-    @Override
-    public double getEndX() {
-        return 1;
-    }
-
-    @Override
-    public double getStartY() {
-        return -1;
-    }
-
-    @Override
-    public double getEndY() {
-        return 1;
     }
 
 }

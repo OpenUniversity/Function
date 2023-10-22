@@ -1,10 +1,9 @@
-package plot;
+package curve;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Point2D;
-import plot.curve.Curve;
 
 /**
  * Represents a canvas that can draw curves
@@ -20,20 +19,14 @@ public class CurveCanvas extends CartesianAxesCanvas {
 
     public void addCurve(Curve curve) {
         curves.add(curve);
-        expandBounds(curve);
-    }
-
-    public void removeCurve(Curve curve) {
-        if (curves.remove(curve)) {
-            resetBounds();
-            for (Curve c : curves) {
-                expandBounds(c);
-            }
+        for (Point2D point : curve) {
+            expandXAxis(point.getX());
+            expandYAxis(point.getY());
         }
     }
 
-    protected void strokeCurve(Curve curve) {
-        gc.setFill(curve.getPaint());
+    private void strokeCurve(Curve curve) {
+        setStroke(curve.getPaint());
         Point2D prev = null;
         for (Point2D curr : curve) {
             if (prev != null && curr != null)
@@ -42,9 +35,7 @@ public class CurveCanvas extends CartesianAxesCanvas {
         }
     }
 
-    @Override
-    protected void drawInBounds() {
-        super.drawInBounds();
+    public void drawCurves() {
         for (Curve curve : curves) {
             strokeCurve(curve);
         }

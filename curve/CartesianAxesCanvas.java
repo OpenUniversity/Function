@@ -1,9 +1,10 @@
-package plot;
+package curve;
 
+import axis.SteppedAxis;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import range.SteppedAxis;
+import javafx.scene.paint.Paint;
 
 /**
  * Represents a canvas with a cartesian axes
@@ -14,7 +15,7 @@ public class CartesianAxesCanvas extends Canvas {
 
     private SteppedAxis xAxis;
     private SteppedAxis yAxis;
-    private GraphicsContext gc;
+    private GraphicsContext gc; // we manually take control of the Graphics context here
 
     public CartesianAxesCanvas(double width, double height) {
         super(width, height);
@@ -33,7 +34,8 @@ public class CartesianAxesCanvas extends Canvas {
     }
 
     public void expandYAxis(double y) {
-        yAxis.expandTo(y);
+        if (yAxis.expandTo(y))
+            System.out.println("Expanded y to " + y);
     }
 
     public void strokeLine(Point2D p1, Point2D p2) {
@@ -41,6 +43,10 @@ public class CartesianAxesCanvas extends Canvas {
         Point2D canvasP2 = toCanvasPoint(p2);
         gc.strokeLine(canvasP1.getX(), canvasP1.getY(), canvasP2.getX(),
                 canvasP2.getY());
+    }
+
+    public void setStroke(Paint paint) {
+        gc.setStroke(paint);
     }
 
     private Point2D toCanvasPoint(Point2D point) {

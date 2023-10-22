@@ -1,4 +1,4 @@
-package range;
+package axis;
 
 /**
  * Represents a rectangle in the real plane

@@ -1,4 +1,4 @@
-package range;
+package axis;
 
 /**
  * Represents a range of numbers that span over a limited amount of pixels, and

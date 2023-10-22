@@ -1,4 +1,4 @@
-package range;
+package axis;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,9 +53,9 @@ public class SteppedAxis extends Axis {
                 steps.add(units);
         } else {
             // range includes 0. Start from 0 towards the positives, and viceversa
-            for (int units = unitsPerStep; units <= end; units += unitsPerStep)
+            for (int units = unitsPerStep; units < end + unitsPerStep; units += unitsPerStep)
                 steps.add(units);
-            for (int units = -unitsPerStep; units >= start; units -= unitsPerStep)
+            for (int units = -unitsPerStep; units > start - unitsPerStep; units -= unitsPerStep)
                 steps.add(units);
         }
         return steps;
