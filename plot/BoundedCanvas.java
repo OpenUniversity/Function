@@ -1,8 +1,10 @@
-package plot.bounded;
+package plot;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import range.Boundable;
+import range.Bounded;
 
 /**
  * Represents a canvas that shows a rectangle subset of the plane

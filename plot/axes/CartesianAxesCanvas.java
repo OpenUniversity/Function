@@ -1,8 +1,8 @@
 package plot.axes;
 
 import javafx.geometry.Point2D;
-import plot.bounded.Boundable;
-import plot.bounded.BoundedCanvas;
+import plot.BoundedCanvas;
+import range.Boundable;
 
 /**
  * Represents a canvas with a cartesian axes

@@ -3,7 +3,7 @@ package plot.axes;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import plot.Drawable;
-import plot.bounded.Boundable;
+import range.Boundable;
 
 public class CartesianAxes implements Drawable {
 

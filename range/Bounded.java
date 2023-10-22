@@ -1,4 +1,4 @@
-package plot.bounded;
+package range;
 
 /**
  * Represents something in the plane that can be bounded by a rectangle

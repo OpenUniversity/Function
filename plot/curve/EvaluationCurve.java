@@ -3,7 +3,7 @@ package plot.curve;
 import java.util.function.Function;
 
 import javafx.geometry.Point2D;
-import plot.bounded.Range;
+import range.Range;
 
 /**
  * Represents evaluation that is done based on a rule

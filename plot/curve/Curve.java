@@ -7,7 +7,7 @@ import java.util.List;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import plot.bounded.Bounded;
+import range.Bounded;
 
 /**
  * Represents something that can be drawn
