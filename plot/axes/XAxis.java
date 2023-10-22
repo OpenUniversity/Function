@@ -19,6 +19,8 @@ public class XAxis extends DrawableAxis {
         double lineMaxHeight = location + MARK_SIZE_PX / 2;
         double lineMinHeight = location - MARK_SIZE_PX / 2;
         double textHeight = location + 2 * MARK_SIZE_PX;
+        if (textHeight > pxSize)
+            textHeight = location - 3 * MARK_SIZE_PX / 2.0;
         gc.strokeLine(stepLocation, lineMaxHeight, stepLocation, lineMinHeight);
         gc.strokeText(String.valueOf(units), stepLocation - MARK_SIZE_PX / 3, textHeight);
     }

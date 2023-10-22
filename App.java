@@ -23,7 +23,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Canvas canvas = new Canvas(400, 400);
-        CartesianAxes axes = new CartesianAxes(-8, 8, -7, 8, canvas.getWidth(), canvas.getHeight());
+        CartesianAxes axes = new CartesianAxes(0, 8, 0, 8, canvas.getWidth(), canvas.getHeight());
         StackPane layout = new StackPane(canvas);
         layout.setPadding(new Insets(20));
 

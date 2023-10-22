@@ -25,6 +25,8 @@ public class YAxis extends DrawableAxis {
         double lineStart = location - MARK_SIZE_PX / 2;
         double lineEnd = location + MARK_SIZE_PX / 2;
         double textStart = location - 2 * MARK_SIZE_PX;
+        if (textStart < 0)
+            textStart = location + 3 * MARK_SIZE_PX / 2.0;
         gc.strokeLine(lineStart, stepLocation, lineEnd, stepLocation);
         gc.strokeText(String.valueOf(units), textStart, stepLocation + MARK_SIZE_PX / 3);
     }
