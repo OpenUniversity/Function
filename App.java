@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import plot.UnitCircle;
 import plot.axes.CartesianAxes;
 import vector.MapVector;
 import vector.Vector;
@@ -23,7 +24,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Canvas canvas = new Canvas(400, 400);
-        CartesianAxes axes = new CartesianAxes(0, 8, 0, 8, canvas.getWidth(), canvas.getHeight());
+        CartesianAxes axes = new CartesianAxes(-1, 1, -1, 1, canvas.getWidth(), canvas.getHeight());
         StackPane layout = new StackPane(canvas);
         layout.setPadding(new Insets(20));
 
@@ -31,6 +32,8 @@ public class App extends Application {
         stage.setScene(new Scene(layout));
         stage.show();
         axes.draw(canvas.getGraphicsContext2D());
+        UnitCircle circ = new UnitCircle(axes);
+        circ.draw(canvas.getGraphicsContext2D());
     }
 
     public static void vectorTest() {
