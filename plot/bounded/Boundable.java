@@ -1,4 +1,4 @@
-package plot;
+package plot.bounded;
 
 /**
  * Represents a rectangle subset of the two dimentional plane

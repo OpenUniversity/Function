@@ -2,8 +2,8 @@ package plot.axes;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
-import plot.Boundable;
 import plot.Drawable;
+import plot.bounded.Boundable;
 
 public class CartesianAxes implements Drawable {
 

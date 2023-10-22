@@ -11,7 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import plot.UnitCircle;
+import plot.axes.CartesianAxesCanvas;
+import plot.bounded.Bounded;
 import plot.curve.EvaluationCurve;
 import vector.MapVector;
 import vector.Vector;
@@ -23,17 +24,18 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Canvas canvas = new Canvas(400, 400);
+        CartesianAxesCanvas canvas = new CartesianAxesCanvas(400, 400);
+        canvas.expandBounds(new Bounded(-5, 5, -5, 5));
         StackPane layout = new StackPane(canvas);
-        Function f = new PowerFunction(2).plus(Constant.of(5));
-        EvaluationCurve curve = new EvaluationCurve(f::evaluate, -5, 5, canvas.getWidth(), canvas.getHeight());
+        Function f = (PowerFunction.of(2).plus(Constant.of(5))).div(PowerFunction.of(1));
+        // EvaluationCurve curve = new EvaluationCurve(f::evaluate, -5, 5,
+        // canvas.getWidth(), canvas.getHeight());
         layout.setPadding(new Insets(20));
 
         stage.setTitle(f.toString());
         stage.setScene(new Scene(layout));
         stage.show();
-        curve.getAxes().draw(canvas.getGraphicsContext2D());
-        curve.draw(canvas.getGraphicsContext2D());
+        canvas.draw();
     }
 
     public static void vectorTest() {

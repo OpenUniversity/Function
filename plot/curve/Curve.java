@@ -1,24 +1,41 @@
 package plot.curve;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javafx.geometry.Point2D;
-import javafx.scene.canvas.GraphicsContext;
-import plot.Boundable;
-import plot.Drawable;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import plot.bounded.Bounded;
 
 /**
  * Represents something that can be drawn
  */
-public abstract class Curve implements Drawable, Iterable<Point2D>, Boundable {
+public abstract class Curve extends Bounded implements Iterable<Point2D> {
+    protected List<Point2D> points;
+    private Paint paint;
+
+    public Curve(Paint paint) {
+        this.points = new ArrayList<>();
+        this.paint = paint;
+    }
+
+    public Curve() {
+        this(Color.BLACK);
+    }
+
+    public Paint getPaint() {
+        return paint;
+    }
+
+    public void setPaint(Paint paint) {
+        this.paint = paint;
+    }
 
     @Override
-    public void draw(GraphicsContext gc) {
-        Point2D prev = null;
-        for (Point2D curr : this) {
-            if (prev != null && curr != null) {
-                gc.strokeLine(prev.getX(), prev.getY(), curr.getX(), curr.getY());
-            }
-            prev = curr;
-        }
+    public Iterator<Point2D> iterator() {
+        return points.iterator();
     }
 
 }
