@@ -53,7 +53,6 @@ public abstract class Function {
      */
     public String substitute(String x, boolean parenthesize) {
         String result = this.substitute(x);
-        System.out.println(this.getClass() + ";" + parenthesize + ";" + shouldAddPatentheses());
         if (parenthesize && shouldAddPatentheses())
             result = "(" + result + ")";
         return result;
