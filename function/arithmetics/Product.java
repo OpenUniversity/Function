@@ -51,6 +51,28 @@ public class Product extends FunctionArithmetic {
     }
 
     @Override
+    public Function div(Function other) {
+        Function prod;
+
+        // try resolving to the left
+        prod = left.div(other);
+        if (!(prod instanceof Quotient))
+            return new Product(prod, right);
+
+        // try resolving to the right
+        prod = right.div(other);
+        if (!(prod instanceof Quotient))
+            return new Product(left, prod);
+
+        return super.div(other);
+    }
+
+    @Override
+    public Function pow(Function exponent) {
+        return left.pow(exponent).times(right.pow(exponent));
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (!(other instanceof Product))
             return false;

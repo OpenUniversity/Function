@@ -1,7 +1,7 @@
 import function.Function;
 import function.FunctionVector;
+import function.Identity;
 import function.elementary.ExponentialFunction;
-import function.elementary.PowerFunction;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -20,7 +20,7 @@ public class App extends Application {
         StackPane layout = new StackPane(canvas);
         layout.setPadding(new Insets(20));
 
-        Function f = new ExponentialFunction().compose(FunctionVector.scale(PowerFunction.of(2), -1));
+        Function f = new ExponentialFunction().compose(FunctionVector.scale(new Identity().squared(), -1));
         canvas.addFunction(f, -5, 5, Color.DARKCYAN, 1);
 
         stage.setTitle(f.toString());

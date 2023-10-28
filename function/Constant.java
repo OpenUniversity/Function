@@ -1,6 +1,6 @@
 package function;
 
-import function.elementary.PowerFunction;
+import function.arithmetics.Power;
 
 /**
  * Represents a function f(x)=1
@@ -49,7 +49,7 @@ public class Constant extends Function {
 
     @Override
     public Function div(Function other) {
-        return PowerFunction.of(-1).compose(other);
+        return Power.inverse(other);
     }
 
     @Override

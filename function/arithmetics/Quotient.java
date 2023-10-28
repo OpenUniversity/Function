@@ -1,7 +1,6 @@
 package function.arithmetics;
 
 import function.Function;
-import function.elementary.PowerFunction;
 
 /**
  * Represents a ratio of two functions
@@ -21,7 +20,7 @@ public class Quotient extends FunctionArithmetic {
     public Function derive() {
         // based on formula [f/g]'=(f'g-fg')/g^2
         Function numerator = left.derive().times(right).minus(left.times(right.derive()));
-        Function denominator = PowerFunction.of(2).compose(right);
+        Function denominator = right.squared();
         return numerator.div(denominator);
     }
 
@@ -37,6 +36,11 @@ public class Quotient extends FunctionArithmetic {
 
     public Function div(Function other) {
         return left.div(right.times(other));
+    }
+
+    @Override
+    public Function pow(Function exponent) {
+        return left.pow(exponent).div(right.pow(exponent));
     }
 
 }

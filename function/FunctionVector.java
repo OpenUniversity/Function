@@ -39,12 +39,21 @@ public class FunctionVector extends Function {
         if (!(func instanceof FunctionVector))
             return 1;
         FunctionVector vec = (FunctionVector) func;
-        if (vec.getSize() != 1)
+        if (vec.getSize() > 1)
             return 1;
         for (Scale<Function> term : vec.terms) { // remember there is only one
             return term.getScalar();
         }
-        return 1; // should not get here;
+        return 0;
+    }
+
+    public static Function getScaledFunc(Function func) {
+        if (getScalar(func) == 1)
+            throw new IllegalArgumentException("Cannot de-scale a vector with scalar 1");
+        for (Scale<Function> term : ((FunctionVector) func).terms) { // remember there is only one
+            return term.getVector();
+        }
+        return new FunctionVector(); // should not get here
     }
 
     /**
@@ -159,7 +168,8 @@ public class FunctionVector extends Function {
 
     @Override
     public Function div(Function other) {
-        // TODO: Implement function division
+        if (getScalar(this) == 0)
+            return new FunctionVector();
 
         return super.div(other);
     }

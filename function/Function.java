@@ -1,9 +1,9 @@
 package function;
 
 import function.arithmetics.Compose;
+import function.arithmetics.Power;
 import function.arithmetics.Product;
 import function.arithmetics.Quotient;
-import function.elementary.PowerFunction;
 
 /**
  * Represents a function in java
@@ -82,8 +82,11 @@ public abstract class Function {
     public Function times(Function other) {
         if (other instanceof Constant)
             return this;
-        if (other instanceof FunctionVector || other instanceof Product || other instanceof Quotient)
+        if (other instanceof FunctionVector || other instanceof Product || other instanceof Quotient
+                || (!(this instanceof Power) && other instanceof Power))
             return other.times(this);
+        if (this.equals(other))
+            return this.squared();
         return new Product(this, other);
     };
 
@@ -104,6 +107,10 @@ public abstract class Function {
             Quotient quo = (Quotient) other;
             return this.times(quo.getRight()).div(quo.getLeft());
         }
+        if (this.equals(other))
+            return Constant.of(1);
+        if (other instanceof Power && this.equals(((Power) other).getLeft())) // apply rule a / a^n = a^(1-n)
+            return new Power(this, Constant.of(1)).div(other);
         return new Quotient(this, other);
     };
 
@@ -116,7 +123,7 @@ public abstract class Function {
      * @return the composed function
      */
     public Function compose(Function inner) {
-        if (inner.equals(PowerFunction.IDENTITY))
+        if (inner instanceof Identity)
             return this;
         if (inner instanceof Constant)
             return Constant.of(evaluate(inner.evaluate(0))); // will just give us the value at 1
@@ -126,6 +133,29 @@ public abstract class Function {
         }
         return new Compose(this, inner);
     };
+
+    /**
+     * Returns a function that is equivalent to this function, to the power of
+     * another function.
+     * 
+     * @param exponent the function that will be the exponent of this function
+     */
+    public Function pow(Function exponent) {
+        if (exponent.equals(Constant.of(1)))
+            return this;
+        if (FunctionVector.getScalar(exponent) == 0)
+            return Constant.of(1);
+        return new Power(this, exponent);
+    }
+
+    /**
+     * Returns this function squared
+     * 
+     * @return the square of this function
+     */
+    public Function squared() {
+        return this.pow(Constant.of(2));
+    }
 
     /**
      * Checks if the function is equal to another

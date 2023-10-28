@@ -42,8 +42,9 @@ public abstract class Vector<VecType> implements Iterable<Scale<VecType>> {
      */
     public double projection(VecType vector) {
         for (Scale<VecType> scale : this) {
-            if (scale.getVector().equals(vector))
+            if (scale.getVector().equals(vector)) {
                 return scale.getScalar();
+            }
         }
         return 0;
     }
@@ -54,7 +55,7 @@ public abstract class Vector<VecType> implements Iterable<Scale<VecType>> {
     public boolean equals(Vector<VecType> vec) {
         if (dimensions() != vec.dimensions())
             return false;
-        for (Scale<VecType> scale : vec) {
+        for (Scale<VecType> scale : this) {
             if (scale.getScalar() != vec.projection(scale.getVector()))
                 return false;
         }
