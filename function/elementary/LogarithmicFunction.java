@@ -42,6 +42,8 @@ public class LogarithmicFunction extends Function {
         double scalar = FunctionVector.getScalar(inner);
         if (scalar <= 0)
             throw new ArithmeticException("Cannot compose non-positive in logarithmic function");
+
+        // apply rule ln(ab) = ln a + ln b
         if (scalar != 1) {
             return Constant.of(Math.log(scalar)).plus(compose(FunctionVector.getScaledFunc(inner)));
         }
@@ -49,9 +51,17 @@ public class LogarithmicFunction extends Function {
             Product prod = (Product) inner;
             return compose(prod.getLeft()).plus(compose(prod.getRight()));
         }
+
+        // apply rule ln(a/b) = ln a - ln b
         if (inner instanceof Quotient) {
             Quotient prod = (Quotient) inner;
             return compose(prod.getLeft()).minus(compose(prod.getRight()));
+        }
+
+        // apply rule ln a^b = b * ln a
+        if (inner instanceof Power) {
+            Power pow = (Power) inner;
+            return pow.getRight().times(compose(pow.getLeft()));
         }
 
         return super.compose(this);
