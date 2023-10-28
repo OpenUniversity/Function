@@ -3,6 +3,7 @@ package function;
 import function.arithmetics.Compose;
 import function.arithmetics.Product;
 import function.arithmetics.Quotient;
+import function.elementary.PowerFunction;
 
 /**
  * Represents a function in java
@@ -95,6 +96,10 @@ public abstract class Function {
     public Function div(Function other) {
         if (other instanceof Constant)
             return this;
+        if (other instanceof Product) {
+            Product prod = (Product) other;
+            return this.div(prod.getLeft()).div(prod.getRight());
+        }
         if (other instanceof Quotient) {
             Quotient quo = (Quotient) other;
             return this.times(quo.getRight()).div(quo.getLeft());
@@ -111,6 +116,8 @@ public abstract class Function {
      * @return the composed function
      */
     public Function compose(Function inner) {
+        if (inner.equals(PowerFunction.IDENTITY))
+            return this;
         if (inner instanceof Constant)
             return Constant.of(evaluate(inner.evaluate(0))); // will just give us the value at 1
         if (inner instanceof Compose) { // function composition is associative

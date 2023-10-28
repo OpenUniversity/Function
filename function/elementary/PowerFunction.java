@@ -11,6 +11,8 @@ import function.arithmetics.Quotient;
  */
 public class PowerFunction extends Function {
 
+    public static final Function IDENTITY = new PowerFunction(1);
+
     private double power;
 
     /**
