@@ -16,6 +16,11 @@ public class Identity extends Function {
     }
 
     @Override
+    public boolean shouldAddPatentheses() {
+        return false;
+    }
+
+    @Override
     public String substitute(String x) {
         return x;
     }

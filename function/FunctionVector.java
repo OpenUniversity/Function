@@ -84,6 +84,11 @@ public class FunctionVector extends Function {
     }
 
     @Override
+    public boolean shouldAddPatentheses() {
+        return getSize() >= 1;
+    }
+
+    @Override
     public String substitute(String x) {
         boolean prefixWithPlus = false;
         String result = "";

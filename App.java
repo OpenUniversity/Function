@@ -21,6 +21,7 @@ public class App extends Application {
         layout.setPadding(new Insets(20));
 
         Function f = new ExponentialFunction().compose(FunctionVector.scale(new Identity().squared(), -1));
+        System.out.println(FunctionVector.scale(new Identity().squared(), -1).substitute("x", true));
         canvas.addFunction(f, -5, 5, Color.DARKCYAN, 1);
 
         stage.setTitle(f.toString());

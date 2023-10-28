@@ -35,6 +35,15 @@ public abstract class Function {
     public abstract String substitute(String x);
 
     /**
+     * Should add parenthesis to a function is needed? Override in subclasses
+     * 
+     * @return true if should, false otherwise
+     */
+    public boolean shouldAddPatentheses() {
+        return true;
+    }
+
+    /**
      * Show a string representation of the function
      * 
      * @param x            the value to substitute x for
@@ -44,7 +53,8 @@ public abstract class Function {
      */
     public String substitute(String x, boolean parenthesize) {
         String result = this.substitute(x);
-        if (parenthesize)
+        System.out.println(this.getClass() + ";" + parenthesize + ";" + shouldAddPatentheses());
+        if (parenthesize && shouldAddPatentheses())
             result = "(" + result + ")";
         return result;
     }

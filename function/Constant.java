@@ -27,14 +27,13 @@ public class Constant extends Function {
     }
 
     @Override
-    public String substitute(String x) {
-        return "";
+    public boolean shouldAddPatentheses() {
+        return false;
     }
 
     @Override
-    public String substitute(String x, boolean parenthesize) {
-        // here, we override the default behavior, and return an empty string nontheless
-        return substitute(x);
+    public String substitute(String x) {
+        return "";
     }
 
     @Override
