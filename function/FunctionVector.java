@@ -1,5 +1,6 @@
 package function;
 
+import function.arithmetics.Quotient;
 import vector.ArrayListVector;
 import vector.Scale;
 import vector.Vector;
@@ -175,8 +176,20 @@ public class FunctionVector extends Function {
     public Function div(Function other) {
         if (getScalar(this) == 0)
             return new FunctionVector();
+        Function superResult = super.div(other);
+        if (!(superResult instanceof Quotient))
+            return superResult;
 
-        return super.div(other);
+        // if result is a fraction, try resolving
+        FunctionVector quotient = new FunctionVector();
+        Function current;
+        for (Scale<Function> term : terms) {
+            current = term.getVector().div(other);
+            if (current instanceof Quotient)
+                return superResult;
+            quotient.add(current, term.getScalar());
+        }
+        return quotient;
     }
 
     @Override
