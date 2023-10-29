@@ -3,7 +3,7 @@ package function.arithmetics;
 import function.Constant;
 import function.Function;
 import function.FunctionVector;
-import function.elementary.LogarithmicFunction;
+import function.NaturalLogFunction;
 
 /**
  * Represents the function left^right
@@ -34,7 +34,7 @@ public class Power extends FunctionArithmetic {
         // Therefore, the derivative would be (f'g/f + ln(f)*g') * e^(ln(f) * g), which
         // is equivalent to (f'g/f + ln(f)*g') * (f^g)
         Function innerDerivative = left.derive().times(right).div(left)
-                .plus(right.derive().times(new LogarithmicFunction().compose(left)));
+                .plus(right.derive().times(new NaturalLogFunction().compose(left)));
         return innerDerivative.times(this);
     }
 

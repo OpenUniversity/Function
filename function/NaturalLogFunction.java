@@ -1,9 +1,5 @@
-package function.elementary;
+package function;
 
-import function.Constant;
-import function.Function;
-import function.FunctionVector;
-import function.Identity;
 import function.arithmetics.Power;
 import function.arithmetics.Product;
 import function.arithmetics.Quotient;
@@ -11,7 +7,7 @@ import function.arithmetics.Quotient;
 /**
  * Represents the function ln(x)
  */
-public class LogarithmicFunction extends Function {
+public class NaturalLogFunction extends Function {
 
     @Override
     public double evaluate(double x) throws ArithmeticException {
@@ -32,7 +28,7 @@ public class LogarithmicFunction extends Function {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof LogarithmicFunction;
+        return obj instanceof NaturalLogFunction;
     }
 
     @Override
