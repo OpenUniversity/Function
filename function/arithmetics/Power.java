@@ -2,6 +2,7 @@ package function.arithmetics;
 
 import function.Constant;
 import function.Function;
+import function.FunctionVector;
 import function.elementary.LogarithmicFunction;
 
 /**
@@ -39,7 +40,16 @@ public class Power extends FunctionArithmetic {
 
     @Override
     public String substitute(String x) {
-        return left.substitute(x, true) + "^" + right.substitute(x, true);
+        String leftSubstitute, rightSubstitute, prefix = "";
+        leftSubstitute = left.substitute(x, true);
+        if (FunctionVector.getScalar(right) < 0) {
+            // substitute as a fraction
+            prefix = "1 / ";
+            rightSubstitute = inverse(right).substitute(x, true);
+        } else
+            rightSubstitute = right.substitute(x, true);
+
+        return prefix + leftSubstitute + "^" + rightSubstitute;
     }
 
     @Override
