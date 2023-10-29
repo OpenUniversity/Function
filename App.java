@@ -1,5 +1,5 @@
 import function.Function;
-import function.elementary.PowerFunction;
+import function.elementary.LogarithmicFunction;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -18,8 +18,8 @@ public class App extends Application {
         StackPane layout = new StackPane(canvas);
         layout.setPadding(new Insets(20));
 
-        Function f = PowerFunction.of(-1);
-        canvas.addFunction(f, -5, 5, Color.DARKCYAN);
+        Function f = new LogarithmicFunction(2);
+        canvas.addFunction(f, 0, 8, Color.DARKCYAN);
 
         stage.setTitle(f.toString());
         stage.setScene(new Scene(layout));

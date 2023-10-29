@@ -144,7 +144,7 @@ public class FunctionVector extends Function {
      * @param coefficient its desired coefficient
      * @return the new sum
      */
-    private void add(Function other, double coefficient) {
+    protected void add(Function other, double coefficient) {
         if (other instanceof FunctionVector) { // if other is also a linear combination, add its terms separately
             FunctionVector combination = (FunctionVector) other;
             terms.append(combination.terms, coefficient);
