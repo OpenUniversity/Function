@@ -10,6 +10,8 @@ public class FunctionCurve extends Curve {
 
     public static final double EVALUATION_INTERVAL = 0.01;
 
+    public static final double JUMP_TRESHOLD = 2000; // the maximal amount of units that can be jumped in one x inteval
+
     /**
      * Constructs a new function path
      * 
@@ -20,9 +22,15 @@ public class FunctionCurve extends Curve {
      */
     public FunctionCurve(Function func, double startX, double endX, Paint paint) {
         super(paint);
+        Function derivative = func.derive();
+        double y, dy;
         for (double x = startX; x <= endX; x += EVALUATION_INTERVAL) {
             try {
-                points.add(new Point2D(x, func.evaluate(x)));
+                y = func.evaluate(x);
+                dy = derivative.evaluate(x);
+                if (Math.abs(dy * EVALUATION_INTERVAL) >= JUMP_TRESHOLD)
+                    throw new ArithmeticException("Jump is too big!");
+                points.add(new Point2D(x, y));
             } catch (ArithmeticException e) {
                 points.add(null);
             }

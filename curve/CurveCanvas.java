@@ -20,6 +20,8 @@ public class CurveCanvas extends CartesianAxesCanvas {
     public void addCurve(Curve curve) {
         curves.add(curve);
         for (Point2D point : curve) {
+            if (point == null)
+                continue;
             expandXAxis(point.getX());
             expandYAxis(point.getY());
         }

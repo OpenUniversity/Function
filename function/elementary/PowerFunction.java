@@ -37,7 +37,7 @@ public class PowerFunction extends Power {
     @Override
     public String substitute(String x) {
         if (getPower() < 0) {
-            Function denominator = new PowerFunction(Math.abs(getPower()));
+            Function denominator = PowerFunction.of(Math.abs(getPower()));
             return "1 / " + denominator.substitute(x);
         }
         if (getPower() == 1)
