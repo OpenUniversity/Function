@@ -2,9 +2,6 @@ package curve;
 
 import axis.SteppedAxis;
 import javafx.geometry.Point2D;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Paint;
 
 /**
  * Represents a canvas with a cartesian axes
@@ -15,18 +12,11 @@ public class CartesianAxesCanvas extends Canvas {
 
     private SteppedAxis xAxis;
     private SteppedAxis yAxis;
-    private GraphicsContext gc; // we manually take control of the Graphics context here
 
     public CartesianAxesCanvas(double width, double height) {
         super(width, height);
         xAxis = new SteppedAxis(width);
         yAxis = new SteppedAxis(height);
-        gc = super.getGraphicsContext2D();
-    }
-
-    @Override
-    public GraphicsContext getGraphicsContext2D() {
-        return null; // don't allow drawing outside of this object
     }
 
     public void expandXAxis(double x) {
@@ -37,28 +27,25 @@ public class CartesianAxesCanvas extends Canvas {
         yAxis.expandTo(y);
     }
 
-    public void strokeLine(Point2D p1, Point2D p2) {
-        Point2D canvasP1 = toCanvasPoint(p1);
-        Point2D canvasP2 = toCanvasPoint(p2);
-        gc.strokeLine(canvasP1.getX(), canvasP1.getY(), canvasP2.getX(),
-                canvasP2.getY());
-    }
-
-    public void setStroke(Paint paint) {
-        gc.setStroke(paint);
-    }
-
     private Point2D toCanvasPoint(Point2D point) {
         return new Point2D(xAxis.getPixelsOfUnits(point.getX()), getHeight() - yAxis.getPixelsOfUnits(point.getY()));
     }
 
-    public void drawAxes() {
+    @Override
+    protected void strokeLine(Point2D p1, Point2D p2) {
+        Point2D canvasP1 = toCanvasPoint(p1);
+        Point2D canvasP2 = toCanvasPoint(p2);
+        super.strokeLine(canvasP1, canvasP2);
+    }
+
+    @Override
+    public void draw() {
         double width = getWidth(), height = getHeight();
         double originX = xAxis.getOriginLocation(), originY = height - yAxis.getOriginLocation();
         // draw x axis
-        gc.strokeLine(0, originY, width, originY);
+        super.strokeLine(0, originY, width, originY);
         // draw y axis
-        gc.strokeLine(originX, 0, originX, height);
+        super.strokeLine(originX, 0, originX, height);
 
         // draw steps and labels
         double stepLocation, stepStart, stepStop;
@@ -73,8 +60,8 @@ public class CartesianAxesCanvas extends Canvas {
         for (int xStep : xAxis.getSteps()) {
             stepLocation = xAxis.getPixelsOfUnits(xStep);
             stepLabelX = stepLocation - MARK_SIZE_PX / 3;
-            gc.strokeLine(stepLocation, stepStart, stepLocation, stepStop);
-            gc.strokeText(String.valueOf(xStep), stepLabelX, stepLabelY);
+            super.strokeLine(stepLocation, stepStart, stepLocation, stepStop);
+            super.strokeText(String.valueOf(xStep), stepLabelX, stepLabelY);
         }
 
         // draw y axis steps
@@ -86,8 +73,8 @@ public class CartesianAxesCanvas extends Canvas {
         for (int yStep : yAxis.getSteps()) {
             stepLocation = height - yAxis.getPixelsOfUnits(yStep);
             stepLabelY = stepLocation + MARK_SIZE_PX / 3;
-            gc.strokeLine(stepStart, stepLocation, stepStop, stepLocation);
-            gc.strokeText(String.valueOf(yStep), stepLabelX, stepLabelY);
+            super.strokeLine(stepStart, stepLocation, stepStop, stepLocation);
+            super.strokeText(String.valueOf(yStep), stepLabelX, stepLabelY);
         }
     }
 

@@ -37,7 +37,9 @@ public class CurveCanvas extends CartesianAxesCanvas {
         }
     }
 
-    public void drawCurves() {
+    @Override
+    public void draw() {
+        super.draw();
         for (Curve curve : curves) {
             strokeCurve(curve);
         }

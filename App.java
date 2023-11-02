@@ -24,8 +24,7 @@ public class App extends Application {
         stage.setTitle(f.toString());
         stage.setScene(new Scene(layout));
         stage.show();
-        canvas.drawAxes();
-        canvas.drawCurves();
+        canvas.draw();
     }
 
 }
