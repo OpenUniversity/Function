@@ -13,8 +13,7 @@ public class Range {
     }
 
     public Range(double start, double end) {
-        this.start = start;
-        this.end = end;
+        setRange(start, end);
     }
 
     public Range(Range other) {
@@ -25,16 +24,8 @@ public class Range {
         return start;
     }
 
-    public void expandStart(double x) {
-        start = Math.min(start, x);
-    }
-
     public double getEnd() {
         return end;
-    }
-
-    public void expandEnd(double x) {
-        end = Math.max(end, x);
     }
 
     /**
@@ -57,6 +48,11 @@ public class Range {
 
     public double getLength() {
         return end - start;
+    }
+
+    public void setRange(double start, double end) {
+        this.start = start;
+        this.end = end;
     }
 
 }

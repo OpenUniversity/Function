@@ -25,10 +25,20 @@ public class SteppedAxis extends Axis {
         boolean modified = super.expandTo(x);
         if (!modified)
             return false;
+        return setSteps();
+    }
+
+    /**
+     * Set the steps. Return false if cannot instanciate, since axis is too small to
+     * contain range
+     * 
+     * @return
+     */
+    private boolean setSteps() {
         double maxNumOfSteps = pxSize / MIN_PX_PER_STEP;
         unitsPerStep = (int) Math.ceil(getLength() / (maxNumOfSteps - STEP_MARGIN)); // divide the number of units by
                                                                                      // the number of usable steps (not
-        if (unitsPerStep < 0) // this will happen when the length is 0, or where the axis size is too small
+        if (unitsPerStep <= 0) // this will happen when the length is 0, or where the axis size is too small
             return false;
         double numOfSteps = getLength() / unitsPerStep + STEP_MARGIN;
         pxPerStep = pxSize / numOfSteps; // including the step margin)
@@ -41,7 +51,14 @@ public class SteppedAxis extends Axis {
             return super.getPixelsOfUnits(units);
         double stepsFromOrigin = units / unitsPerStep;
         double pxFromOrigin = stepsFromOrigin * pxPerStep;
-        return getOriginLocation() + pxFromOrigin;
+        return getOriginLocationUnsafe() + pxFromOrigin;
+    }
+
+    @Override
+    public double getUnitsOfPixels(double pixels) {
+        double pxFromOrigin = pixels - getOriginLocationUnsafe();
+        double stepsFromOrigin = pxFromOrigin / pxPerStep;
+        return stepsFromOrigin * unitsPerStep;
     }
 
     public Iterable<Integer> getSteps() {
@@ -59,6 +76,12 @@ public class SteppedAxis extends Axis {
                 steps.add(units);
         }
         return steps;
+    }
+
+    @Override
+    public void setRange(double start, double end) {
+        super.setRange(start, end);
+        setSteps();
     }
 
 }

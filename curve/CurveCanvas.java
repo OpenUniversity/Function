@@ -25,6 +25,10 @@ public class CurveCanvas extends Canvas {
         curves.add(curve);
     }
 
+    public boolean isDrawn() {
+        return isDrawn;
+    }
+
     private void strokeCurve(Curve curve) {
         setStroke(curve.getPaint());
         Point2D prev = null;
@@ -42,5 +46,4 @@ public class CurveCanvas extends Canvas {
             strokeCurve(curve);
         }
     }
-
 }

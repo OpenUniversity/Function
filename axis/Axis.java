@@ -23,7 +23,7 @@ public class Axis extends Range {
         if (this.getLength() == 0)
             this.negativeShare = 0.5;
         else
-            this.negativeShare = Math.min(Math.max((-this.start) / getLength(), 0), 1);
+            this.negativeShare = -this.start / getLength();
     }
 
     @Override
@@ -39,11 +39,30 @@ public class Axis extends Range {
     }
 
     public double getOriginLocation() {
+        return Math.min(pxSize, Math.max(0, getOriginLocationUnsafe()));
+    }
+
+    protected double getOriginLocationUnsafe() {
         return pxSize * negativeShare;
+    }
+
+    public double getPxSize() {
+        return pxSize;
     }
 
     public double getPixelsOfUnits(double units) {
         return ((units - this.start) / getLength()) * pxSize;
+    }
+
+    public double getUnitsOfPixels(double pixels) {
+        double axisShare = pixels / pxSize;
+        return start + axisShare * getLength();
+    }
+
+    @Override
+    public void setRange(double start, double end) {
+        super.setRange(start, end);
+        initNegativeShare();
     }
 
 }

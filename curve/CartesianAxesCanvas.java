@@ -13,8 +13,8 @@ public class CartesianAxesCanvas extends CurveCanvas {
     public static final int MARK_SIZE_PX = 10;
     public static final Paint AXES_COLOR = Color.BLACK;
 
-    private SteppedAxis xAxis;
-    private SteppedAxis yAxis;
+    protected SteppedAxis xAxis;
+    protected SteppedAxis yAxis;
 
     public CartesianAxesCanvas(double width, double height) {
         super(width, height);
