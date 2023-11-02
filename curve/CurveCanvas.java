@@ -8,23 +8,21 @@ import javafx.geometry.Point2D;
 /**
  * Represents a canvas that can draw curves
  */
-public class CurveCanvas extends CartesianAxesCanvas {
+public class CurveCanvas extends Canvas {
 
     protected List<Curve> curves;
+    private boolean isDrawn;
 
     public CurveCanvas(double width, double height) {
         super(width, height);
         this.curves = new ArrayList<>();
+        isDrawn = false;
     }
 
     public void addCurve(Curve curve) {
+        if (isDrawn)
+            clear();
         curves.add(curve);
-        for (Point2D point : curve) {
-            if (point == null)
-                continue;
-            expandXAxis(point.getX());
-            expandYAxis(point.getY());
-        }
     }
 
     private void strokeCurve(Curve curve) {
@@ -39,7 +37,7 @@ public class CurveCanvas extends CartesianAxesCanvas {
 
     @Override
     public void draw() {
-        super.draw();
+        isDrawn = true;
         for (Curve curve : curves) {
             strokeCurve(curve);
         }

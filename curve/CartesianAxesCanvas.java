@@ -2,13 +2,16 @@ package curve;
 
 import axis.SteppedAxis;
 import javafx.geometry.Point2D;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 /**
  * Represents a canvas with a cartesian axes
  */
-public class CartesianAxesCanvas extends Canvas {
+public class CartesianAxesCanvas extends CurveCanvas {
 
     public static final int MARK_SIZE_PX = 10;
+    public static final Paint AXES_COLOR = Color.BLACK;
 
     private SteppedAxis xAxis;
     private SteppedAxis yAxis;
@@ -19,12 +22,15 @@ public class CartesianAxesCanvas extends Canvas {
         yAxis = new SteppedAxis(height);
     }
 
-    public void expandXAxis(double x) {
-        xAxis.expandTo(x);
-    }
-
-    public void expandYAxis(double y) {
-        yAxis.expandTo(y);
+    @Override
+    public void addCurve(Curve curve) {
+        super.addCurve(curve);
+        for (Point2D point : curve) {
+            if (point == null)
+                continue;
+            xAxis.expandTo(point.getX());
+            yAxis.expandTo(point.getY());
+        }
     }
 
     private Point2D toCanvasPoint(Point2D point) {
@@ -40,6 +46,8 @@ public class CartesianAxesCanvas extends Canvas {
 
     @Override
     public void draw() {
+        super.draw();
+        setStroke(AXES_COLOR);
         double width = getWidth(), height = getHeight();
         double originX = xAxis.getOriginLocation(), originY = height - yAxis.getOriginLocation();
         // draw x axis

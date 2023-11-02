@@ -1,11 +1,11 @@
-import curve.CurveCanvas;
+import curve.CartesianAxesCanvas;
 import function.Function;
 import javafx.scene.paint.Color;
 
 /**
  * Expands the curve canvas to directly add functions and their derivatives
  */
-public class FunctionCanvas extends CurveCanvas {
+public class FunctionCanvas extends CartesianAxesCanvas {
 
     public FunctionCanvas(double width, double height) {
         super(width, height);
