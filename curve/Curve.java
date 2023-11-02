@@ -37,4 +37,8 @@ public abstract class Curve implements Iterable<Point2D> {
         return points.iterator();
     }
 
+    protected void clear() {
+        points.clear();
+    }
+
 }
