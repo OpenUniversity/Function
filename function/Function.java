@@ -1,6 +1,7 @@
 package function;
 
 import function.arithmetics.Compose;
+import function.arithmetics.Integral;
 import function.arithmetics.Power;
 import function.arithmetics.Product;
 import function.arithmetics.Quotient;
@@ -164,6 +165,13 @@ public abstract class Function {
      */
     public Function squared() {
         return this.pow(Constant.of(2));
+    }
+
+    /**
+     * Computes the integral function of a function
+     */
+    public Function integrate() {
+        return new Integral(this);
     }
 
     /**
