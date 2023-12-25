@@ -34,4 +34,9 @@ public class Sine extends TrigFunction {
         return super.compose(inner);
     }
 
+    @Override
+    public Function integrate() {
+        return FunctionVector.scale(new Cosine(), -1);
+    }
+
 }

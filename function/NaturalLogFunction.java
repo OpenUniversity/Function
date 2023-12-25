@@ -63,4 +63,9 @@ public class NaturalLogFunction extends Function {
         return super.compose(this);
     }
 
+    @Override
+    public Function integrate() {
+        return Power.inverse(new Identity());
+    }
+
 }

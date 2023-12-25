@@ -35,4 +35,9 @@ public class Identity extends Function {
         return inner;
     }
 
+    @Override
+    public Function integrate() {
+        return FunctionVector.scale(new Identity().squared(), 0.5);
+    }
+
 }

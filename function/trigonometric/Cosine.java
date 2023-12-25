@@ -30,4 +30,9 @@ public class Cosine extends TrigFunction {
         return super.compose(inner);
     }
 
+    @Override
+    public Function integrate() {
+        return new Sine();
+    }
+
 }

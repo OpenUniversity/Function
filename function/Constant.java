@@ -56,4 +56,9 @@ public class Constant extends Function {
         return this;
     }
 
+    @Override
+    public Function integrate() {
+        return new Identity();
+    }
+
 }

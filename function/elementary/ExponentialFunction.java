@@ -1,6 +1,7 @@
 package function.elementary;
 
 import function.Constant;
+import function.Function;
 import function.Identity;
 import function.arithmetics.Power;
 
@@ -16,6 +17,11 @@ public class ExponentialFunction extends Power {
     @Override
     public String substitute(String x) {
         return "e^" + x;
+    }
+
+    @Override
+    public Function integrate() {
+        return this;
     }
 
 }
