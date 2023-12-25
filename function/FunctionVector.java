@@ -1,5 +1,7 @@
 package function;
 
+import java.util.function.UnaryOperator;
+
 import function.arithmetics.Quotient;
 import vector.ArrayListVector;
 import vector.Scale;
@@ -66,6 +68,32 @@ public class FunctionVector extends Function {
         return terms.dimensions();
     }
 
+    /**
+     * Adds a function to the linear combination with a specified coefficient
+     * 
+     * @param other       the function to add
+     * @param coefficient its desired coefficient
+     * @return the new sum
+     */
+    protected void add(Function other, double coefficient) {
+        if (other instanceof FunctionVector) { // if other is also a linear combination, add its terms separately
+            FunctionVector combination = (FunctionVector) other;
+            terms.append(combination.terms, coefficient);
+        } else
+            terms.add(other, coefficient);
+    }
+
+    /**
+     * Applies a linear transformation on the function
+     */
+    public FunctionVector transform(UnaryOperator<Function> transformation) {
+        FunctionVector result = new FunctionVector();
+        for (Scale<Function> term : terms) {
+            result.add(transformation.apply(term.getVector()), term.getScalar());
+        }
+        return result;
+    }
+
     @Override
     public double evaluate(double x) throws ArithmeticException {
         double value = 0;
@@ -77,11 +105,7 @@ public class FunctionVector extends Function {
 
     @Override
     public Function derive() {
-        FunctionVector derivative = new FunctionVector();
-        for (Scale<Function> term : terms) {
-            derivative.add(term.getVector().derive(), term.getScalar());
-        }
-        return derivative;
+        return transform((term) -> term.derive());
     }
 
     @Override
@@ -137,39 +161,17 @@ public class FunctionVector extends Function {
         return diff;
     }
 
-    /**
-     * Adds a function to the linear combination with a specified coefficient
-     * 
-     * @param other       the function to add
-     * @param coefficient its desired coefficient
-     * @return the new sum
-     */
-    protected void add(Function other, double coefficient) {
-        if (other instanceof FunctionVector) { // if other is also a linear combination, add its terms separately
-            FunctionVector combination = (FunctionVector) other;
-            terms.append(combination.terms, coefficient);
-        } else
-            terms.add(other, coefficient);
-    }
-
     @Override
     public Function times(Function other) {
-        FunctionVector product = new FunctionVector();
         // if other factor is also a linear combination, we want to cross-add this.
-        if (other instanceof FunctionVector) {
+        if (other instanceof FunctionVector)
             // in such case, for instance (x+3)(x+4), this equates to (x+3)*x + (x+3)*4
-            FunctionVector combination = (FunctionVector) other;
-            for (Scale<Function> term : combination.terms) {
-                product.add(this.times(term.getVector()), term.getScalar());
-            }
-        } else {
-            // this is the case of (x+3)*x, multiply each of this combination element's by
-            // the other function
-            for (Scale<Function> term : terms) {
-                product.add(term.getVector().times(other), term.getScalar());
-            }
-        }
-        return product;
+            return ((FunctionVector) other).transform((term) -> this.times(term));
+
+        // this is the case of (x+3)*x, multiply each of this combination element's by
+        // the other function
+        return transform((term) -> term.times(other));
+
     }
 
     @Override
@@ -195,11 +197,12 @@ public class FunctionVector extends Function {
     @Override
     public Function compose(Function inner) {
         // composition of vector != vector of compositions!!!
-        FunctionVector composition = new FunctionVector();
-        for (Scale<Function> term : terms) {
-            composition.add(term.getVector().compose(inner), term.getScalar());
-        }
-        return composition;
+        return transform(term -> term.compose(inner));
+    }
+
+    @Override
+    public Function integrate() {
+        return transform(term -> term.integrate());
     }
 
     @Override
