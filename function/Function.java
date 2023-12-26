@@ -36,11 +36,11 @@ public abstract class Function {
     public abstract String substitute(String x);
 
     /**
-     * Should add parenthesis to a function is needed? Override in subclasses
+     * Should add parentheses to a function if needed? Override in subclasses
      * 
-     * @return true if should, false otherwise
+     * @return true if parentheses should be added, false otherwise
      */
-    public boolean shouldAddPatentheses() {
+    public boolean shouldAddParentheses() {
         return true;
     }
 
@@ -48,14 +48,14 @@ public abstract class Function {
      * Show a string representation of the function
      * 
      * @param x            the value to substitute x for
-     * @param parenthesize is marked true if surrounding with parenthesis is
-     *                     nessecary
+     * @param parenthesize is marked true if surrounding with parentheses is necessary
      * @return a string representation of the function
      */
     public String substitute(String x, boolean parenthesize) {
         String result = this.substitute(x);
-        if (parenthesize && shouldAddPatentheses())
+        if (parenthesize && shouldAddParentheses()) {
             result = "(" + result + ")";
+        }
         return result;
     }
 
@@ -101,7 +101,7 @@ public abstract class Function {
     };
 
     /**
-     * Divided this function by another one
+     * Divides this function by another one
      * 
      * @param other the function to divide by
      * @return the quotient function
@@ -149,6 +149,7 @@ public abstract class Function {
      * another function.
      * 
      * @param exponent the function that will be the exponent of this function
+     * @return the power function
      */
     public Function pow(Function exponent) {
         if (exponent.equals(Constant.of(1)))
@@ -169,6 +170,8 @@ public abstract class Function {
 
     /**
      * Computes the integral function of a function
+     * 
+     * @return the integral function
      */
     public Function integrate() {
         return new Integral(this);
