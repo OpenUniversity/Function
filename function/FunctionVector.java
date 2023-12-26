@@ -1,3 +1,6 @@
+/**
+ * This package contains classes related to ...
+ */
 package function;
 
 import java.util.function.UnaryOperator;
@@ -8,7 +11,8 @@ import vector.Scale;
 import vector.Vector;
 
 /**
- * Rperesents a linear combination of functions.
+  * FunctionVector represents a vector of functions that can be combined and manipulated.
+* Rperesents a linear combination of functions.
  * Functions are vectors!
  * 
  * @version 2
@@ -38,6 +42,15 @@ public class FunctionVector extends Function {
         return vec;
     }
 
+    /**
+     * Returns the scalar value of the given function.
+     * If the function is not an instance of FunctionVector, returns 1.
+     * If the function is a FunctionVector with size greater than 1, returns 1.
+     * Otherwise, returns the scalar value of the single term in the FunctionVector.
+     *
+     * @param func the function to get the scalar value from
+     * @return the scalar value of the function
+     */
     public static double getScalar(Function func) {
         if (!(func instanceof FunctionVector))
             return 1;
@@ -94,6 +107,13 @@ public class FunctionVector extends Function {
         return result;
     }
 
+    /**
+     * Evaluates the function at a given value of x.
+     *
+     * @param x the value of x at which to evaluate the function
+     * @return the result of evaluating the function at x
+     * @throws ArithmeticException if an arithmetic error occurs during evaluation
+     */
     @Override
     public double evaluate(double x) throws ArithmeticException {
         double value = 0;
@@ -103,16 +123,32 @@ public class FunctionVector extends Function {
         return value;
     }
 
+    /**
+     * Returns the derivative of the function.
+     *
+     * @return the derivative of the function
+     */
     @Override
     public Function derive() {
         return transform((term) -> term.derive());
     }
 
+    /**
+     * Determines whether parentheses should be added when calling the function.
+     * 
+     * @return true if parentheses should be added, false otherwise
+     */
     @Override
     public boolean shouldAddPatentheses() {
         return getSize() >= 1;
     }
 
+    /**
+     * Substitutes the given value for the variable 'x' in the function and returns the result as a string.
+     * 
+     * @param x the value to substitute for the variable 'x'
+     * @return the result of substituting the value in the function as a string
+     */
     @Override
     public String substitute(String x) {
         boolean prefixWithPlus = false;
@@ -129,6 +165,14 @@ public class FunctionVector extends Function {
         return result;
     }
 
+    /**
+     * Substitutes a given scalar value and substitution string into a term and returns the result as a string.
+     * 
+     * @param prefixWithPlus a boolean value indicating whether to prefix the result with a plus sign if the scalar is positive
+     * @param scalar the scalar value to substitute into the term
+     * @param substitution the substitution string to insert into the term
+     * @return the resulting term as a string
+     */
     private String substituteInTerm(boolean prefixWithPlus, double scalar, String substitution) {
         String result = "";
         double coefficient;
@@ -194,6 +238,12 @@ public class FunctionVector extends Function {
         return quotient;
     }
 
+    /**
+     * Composes this Function with another Function.
+     * 
+     * @param inner The inner Function to compose with.
+     * @return The composed Function.
+     */
     @Override
     public Function compose(Function inner) {
         // composition of vector != vector of compositions!!!
