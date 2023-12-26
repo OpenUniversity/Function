@@ -40,7 +40,7 @@ public abstract class Function {
      * 
      * @return true if should, false otherwise
      */
-    public boolean shouldAddPatentheses() {
+    public boolean shouldAddParentheses() {
         return true;
     }
 
@@ -54,8 +54,9 @@ public abstract class Function {
      */
     public String substitute(String x, boolean parenthesize) {
         String result = this.substitute(x);
-        if (parenthesize && shouldAddPatentheses())
+        if (parenthesize && shouldAddParentheses()) {
             result = "(" + result + ")";
+        }
         return result;
     }
 
