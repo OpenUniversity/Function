@@ -1,3 +1,6 @@
+/**
+ * This class represents a curve in a mathematical function.
+ */
 import curve.Curve;
 import curve.boundable.Boundable;
 import function.Function;
